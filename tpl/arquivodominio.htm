@@ -1,0 +1,49 @@
+
+<div class="container">
+    <div class="row">
+      <h2>Relatório :: Arquivo Dominio ::</h2>
+           
+          <section>
+                  
+                  <form action="" method="post" id="frmarquivodominio" autocomplete="off">
+                      <input type="hidden" name="empresa" id="empresa" value="{empresa}"/>
+                      <fieldset>
+                          
+                          <div class="input-prepend">
+                            <label>Data Inicial:</label>
+                            <span class="add-on icon-calendar"></span>
+                            <input class="span2 padraoinputheight" id="dataini"  name="dataini" type="text">
+                          </div>
+                          
+                          <div class="input-prepend">
+                            <label>Data Final:</label>
+                            <span class="add-on icon-calendar"></span>
+                            <input class="span2 padraoinputheight" id="datafin" name="datafin" type="text">
+                          </div>
+                          
+                     
+                          
+                      </fieldset>
+                      <input type="hidden" name="act" value="faturamento"/>
+                      
+                      
+                      <input type="button" class="btn btn-primary" id="geraarqdominio" value="Gerar Arquivo">
+                      <input type="submit" class="btn btn-primary" value="Visualizar Dados">
+
+                      <a href="#" class="btn btn-info icon-print" onClick="printDiv('relatoriofatu','arquivodominio.php');">&nbsp;Imprimir</a>
+                  </form>
+          
+          </section>
+              
+          <section>  
+            
+            <div id="relatoriofatu">
+              <div class="rel_form_callback"></div>
+            
+            
+            </div>
+         </section>
+          
+    </div>
+  </div>
+  

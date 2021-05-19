@@ -1,0 +1,89 @@
+
+<div class="container">
+    <div class="row">
+      <h2>Informar Movimentação</h2>
+      <div id="msg"></div>
+      <section class="span12">
+        <form action="../php/movi-exec.php" method="post" id="formmovimentacao" autocomplete="off">
+          <input type="hidden" name="act" id="act" value="inserir"/>
+          <fieldset>
+            <div class="input-prepend">
+              <label><strong>Data:</strong></label>
+              <span class="add-on icon-calendar"></span>
+              <input class="span2 padraoinputheight" id="dataini"  name="data" type="text">
+            </div>
+            <div class="input-prepend">
+                <label><strong>Valor:</strong></label>
+                <span class="add-on icon-usd"></span>
+                <input class="span2 padraoinputheight" id="valor"  name="valor" type="text">
+              </div><br/>
+            <div class="input-prepend" style="width: 25%;">
+              <label><strong>Conta Crédito:</strong></label>              
+              <select class="selectize" id="contacredito" name="contacredito">
+                <option value="">Selecione...</option>
+                <!-- START BLOCK : lista -->                                       
+                <option value="{codigo}">{reduzido} - {desc}</option>
+                <!-- END BLOCK : lista -->
+               
+                </select>
+              <!--<input class="span2 padraoinputheight" id="contacredito" name="contacredito" type="text">-->
+            </div>
+            <div class="input-prepend" style="width: 24%;">
+                <label><strong>Conta Débito:</strong></label>                
+                <!--<input class="span2 padraoinputheight" id="contadebido" name="contadebido" type="text">-->
+                <select class="selectize" id="contadebido" name="contadebido">
+                    <option value="">Selecione...</option>
+                                                          
+                    <!-- START BLOCK : lista2 -->                                       
+                    <option value="{codigo}">{reduzido} - {desc}</option>
+                    <!-- END BLOCK : lista2 -->
+                   
+                </select>
+              </div>          
+            <br/>
+                           
+              <div class="input-prepend" style="width: 49%;">
+                <label><strong>Histórico Padrão:</strong></label>                                
+                <select class="selectize" id="idhistpadrao" name="idhistpadrao">
+                    <option value="">Selecione...</option>                                                        
+                    <!-- START BLOCK : listahist -->                                       
+                    <option value="{codigoh}">{codigoh} - {desch}</option>
+                    <!-- END BLOCK : listahist -->                   
+                </select>
+              </div>
+
+              <br/>
+            <div class="input-prepend">
+              <label><strong>Histórico:</strong></label>
+              <textarea name="hist" id="hist" rows="5" class="span6"></textarea>              
+            </div>
+            <br/>
+                          
+              <button type="submit" id="btnlanca" class="btn btn-primary">Adicionar</button>            
+            
+            <a href="../php/admin.php" class="btn">Voltar</a>
+          </fieldset>
+        </form>
+      </section>
+      <section class="span12">
+        <table class="table table-hover tbmovim">
+          <thead>
+            <tr>
+              <th>Data</th>
+              <th>Conta Crédito</th>         
+              <th>Conta Débito</th>
+              <th>Histórico</th>
+              <th>Valor</th>
+              <th>Ação</th>                                   
+            </tr>
+          </thead>
+          <tbody>
+          
+              
+          
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </div>
+  

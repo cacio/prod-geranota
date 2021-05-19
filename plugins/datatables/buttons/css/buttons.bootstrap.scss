@@ -1,0 +1,11 @@
+      });
+                            if (errorsFound.length > oldCount) {
+                                $(el).attr("aria-invalid", "true");
+                            }
+                            else {
+                                var original = $this.data("original-aria-invalid");
+                                $(el).attr("aria-invalid", (original !== undefined ? original : false));
+                            }
+                        });
+                        $form.find("input,select,textarea").not($this).not("[name=\"" + $this.attr("name") + "\"]").trigger("validationLostFocus.validation");
+                        errorsFound = $.unique(erro

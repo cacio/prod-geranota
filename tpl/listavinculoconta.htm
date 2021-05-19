@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="row">
+    <br/>
+    <br/>
+    <h2>Lista Vínculo Conta</h2>
+    <a href="../php/cadastro-vinculoconta.php" class="btn btn-primary btn-rounded"><i class="icon-plus"></i> Cadastrar</a>
+    <br/>
+    <br/>  
+    {msg}  
+    <table id="dyntable" class="table table-bordered">
+
+    <thead>
+
+    <tr>
+        <th>Código</th>
+        <th>Descrição</th>    
+        <th>Conta Contabil (Reduzido)</th>   
+        <th>AÇÃO</th>   
+    </tr>
+
+    </thead>
+
+    <tbody>
+    <!-- START BLOCK : listar --> 
+    <tr id="{codigo}" >
+        <td>{codigo}</td>
+        <td>{nome}</td>
+        <td>{reduzido} - {desc}</td>
+        <td  class="centeralign">    
+            <a href="#" class="deleteformpagto"><span class="icon-remove icon-2x"></span></a>
+            <a href="../php/atualizar-vinculoconta.php?id={codigo}"><span class="icon-pencil icon-2x"></span></a>       
+        </td>
+    </tr>
+    <!-- END BLOCK : listar -->
+
+    </tbody>
+
+    </table>    
+    </div>
+</div>

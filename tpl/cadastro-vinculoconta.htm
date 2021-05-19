@@ -1,0 +1,47 @@
+
+<div class="container">
+    <div class="row">
+        <br/>
+        <br/>
+        <h2>Informar Vínculo Conta</h2>
+      <section>
+        
+        <form action="../php/vinculoconta-exec.php" method="post" autocomplete="off">
+          <input type="hidden" name="act" id="act" value="inserir"/>
+          
+          <fieldset>
+           <div class="span12">
+            
+            <div class="input-prepend">
+                <label><strong>Descrição:</strong></label>
+                <span class="add-on icon-terminal"></span>
+                <input class="span6 padraoinputheight" name="desc" type="text" style="text-transform: uppercase;" required>
+              </div>
+           </div>   
+           <div class="span12">
+                <div class="input-prepend" style="width: 25%;">
+                <label><strong>Conta:</strong></label>              
+                <select class="selectize"  name="conta">
+                    <option value="">Selecione...</option>
+                    <!-- START BLOCK : lista -->                                       
+                    <option value="{codigo}">{reduzido} - {desc}</option>
+                    <!-- END BLOCK : lista -->
+                    
+                    </select>
+                <!--<input class="span2 padraoinputheight" id="contacredito" name="contacredito" type="text">-->
+                </div>
+            </div>
+            
+            <div class="span12">
+                <button type="submit" class="btn btn-primary">Adicionar</button>                        
+                <a href="../php/listavinculoconta.php" class="btn">Voltar</a>
+            </div>              
+            
+
+          </fieldset>
+        </form>
+      </section>
+    
+    </div>
+  </div>
+  

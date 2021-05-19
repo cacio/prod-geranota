@@ -1,0 +1,57 @@
+<div class="rel_form_callback">
+    <!-- START BLOCK : listaralert -->   
+    <div class="message alert"> 
+        <strong style="font-size: 16px;">Inconsistência no vínculo entre Histórico Padrão e Contas</strong> <br/>        
+            {msg}          
+    </div>
+    <!-- END BLOCK : listaralert --> 
+    <!-- START BLOCK : listaralert2 -->   
+    <div class="message alert"> 
+        <strong style="font-size: 16px;">Inconsistência de vínculo de cadastro nos pagamentos</strong> <br/>        
+            {msg2}          
+    </div>
+    <!-- END BLOCK : listaralert2 -->  
+    
+    <!-- START BLOCK : listaralert3 -->   
+        <div class="message alert"> 
+            <strong style="font-size: 16px;">Inconsistência de vínculo de cadastro nos provisionamentos</strong> <br/>        
+                {msg3}          
+        </div>
+    <!-- END BLOCK : listaralert3 -->
+    <!-- START BLOCK : listaralert4 -->   
+    <div class="message alert"> 
+        <strong style="font-size: 16px;">Inconsistência de vínculo de cadastro nos recebimentos</strong> <br/>        
+            {msg4}          
+    </div>
+<!-- END BLOCK : listaralert4  -->  
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Data</th>
+            <th style="text-align: right;">Valor Lançamento</th>
+            <th>Conta Débito</th>
+            <th>Conta Crédito</th>
+            <th>Cod. Histórico</th>
+            <th>Histórico</th>
+            <th>Origem</th>                    
+            <th>Cod. Usuário</th>
+            <th>Cod. Filial/Matriz</th>
+        </tr>
+    </thead>
+    <tbody>
+        <!-- START BLOCK : listar --> 
+        <tr>
+            <td>{data}</td>
+            <td style="text-align: right;">{mov_valor}</td>
+            <td>{mov_idconta_d}</td>
+            <td>{mov_idconta_c}</td>
+            <td>{mov_idhistorico}</td>
+            <td>{mov_historico}</td>
+            <td>12</td>
+            <td>{idusuario}</td>
+            <td>{CODIGOFM}</td>            
+        </tr>
+        <!-- END BLOCK : listar -->
+    </tbody>
+</table>

@@ -1,0 +1,187 @@
+﻿<div class="container">
+  <div class="row">   
+    
+   			
+
+            <form  method="post" action="config-exec.php" enctype="multipart/form-data">
+
+	              <input type="hidden" name="act" value="inserir"/>                     
+					 <section>
+						<fieldset>
+							<legend>Configuração do sistema</legend>
+							  <div class="input-prepend">
+								  <label>Empresa:</label>
+								  <span class="add-on icon-terminal"></span>
+								  <input class="span4 padraoinputheight" id="nome" name="nome" value="{empresa}"  type="text">
+							   </div> 
+							   <br/>
+							   <div class="input-prepend">
+								  <label>Somar Tributos no custo:</label>
+								  <span class="add-on icon-terminal"></span>
+								  <select name="somtribcusto" class="padraoselectheight span2">
+									<option value="S" {ck}>Sim</option>
+									<option value="N" {ck1}>Não</option>
+								  </select>
+							   </div> 
+							   <div class="input-prepend">
+								  <label>Atualiza Preço Custo:</label>
+								  <span class="add-on icon-terminal"></span>
+								  <select name="atualizaprecocusto" class="padraoselectheight span2">
+									<option value="S" {prc}>Sim</option>
+									<option value="N" {prc2}>Não</option>
+								  </select>
+							   </div> 
+
+							   <div class="input-prepend">
+								<label>Formulação Boi Casado:</label>
+								<span class="add-on icon-list"></span>
+								<select name="FormulacaoBoiCasado" class="padraoselectheight span2">
+								  <option value="S" {form1}>Sim</option>
+								  <option value="N" {form2}>Não</option>
+								</select>
+							 </div>
+							 
+							 
+							 <div class="input-prepend">
+								<label>Apropriação:</label>
+								<span class="add-on icon-list"></span>
+								<select name="apropria" class="padraoselectheight span2">
+								  <option value="S" {apro1}>Sim</option>
+								  <option value="N" {apro2}>Não</option>
+								</select>
+							 </div>
+
+							 <div class="input-prepend">
+								<label>Relacionar somente pelo código:</label>
+								<span class="add-on icon-list"></span>
+								<select name="relcomp" class="padraoselectheight span2" title="Se marcado SIM, o sistema irá considerar somente o código do produto do fornecedor para o relacionamento.">
+								  <option value="S" {relcomp1}>Não</option>
+								  <option value="N" {relcomp2}>Sim</option>
+								</select>
+							 </div>
+
+						 </fieldset>
+					  </section>
+					  <section>
+						<fieldset>
+							<legend>Formulação Boi Casado</legend>
+							
+
+							<div class="input-prepend">
+								<label>ID:</label>
+								<span class="add-on icon-terminal"></span>
+								<input type="text" class="form-control span1 buscapro padraoinputheight" name="ID" value=""/>
+								
+							</div>	
+							<div class="input-prepend">
+								<label>NOME:</label>
+								<span class="add-on icon-terminal"></span>
+								<input type="text" class="form-control span2 padraoinputheight"  name="nomprod" value=""/>
+							</div>
+							<div class="input-prepend">
+								<label>QTD PECAS:</label>
+								<span class="add-on icon-terminal"></span>
+								<input type="text" class="form-control span1 padraoinputheight" name="QTDPECAS" value=""/>
+							</div>
+							<div class="input-prepend">
+								<label>PERCENTUAL:</label>
+								<span class="add-on icon-terminal"></span>
+								<input type="text" class="form-control span2 padraoinputheight" name="PERC" value=""/>
+							</div>
+							<div class="input-prepend">
+								<label>AÇÃO:</label>
+								<button type="button" class="btn btn-primary" id="btnformula">GRAVAR</button>	
+							</div>	
+							<hr>
+							<table class="table" id="tbfomulacao">
+								<thead>
+									<tr>
+										<th>PRODUTO</th>
+										<th>QTD PECAS</th>
+										<th>PERCENTUAL</th>
+										<th>AÇÃO</th>
+									</tr>	
+								</thead>
+								<tbody>
+									<!-- START BLOCK : listar --> 	
+									  <tr id="{cod}">
+										<td>{id} - {desc}<input type="hidden" name="forml[{cod}][ID]" value="{id}"><input type="hidden" name="forml[{cod}][DESC]" value="{desc}"></td>
+										<td>{qtdesc}<input type="hidden" name="forml[{cod}][QTDPECAS]" value="{qtdesc}"></td>
+										<td>{perc}<input type="hidden" name="forml[{cod}][PERC]" value="{perc}"> </td>
+										<td><button type="button" class="btn btn-primary btnformularemove">REMOVER</button> </td>
+									  </tr>	
+									<!-- END BLOCK : listar -->  
+								</tbody>
+							</table>
+						</fieldset>
+
+					  </section>
+					  <section>
+						<fieldset>
+							<legend>Configuração do Firebird</legend>
+							<div class="input-prepend">
+								<label>Caminho (FDB)</label>
+								<span class="add-on icon-terminal"></span>
+								<input type="text" class="form-control padraoinputheight" name="hostbird" value="{hostbird}"/>
+							</div>
+							
+							<div class="input-prepend">
+								<label>USURIO</label>
+								<span class="add-on icon-terminal"></span>
+								<input class="form-control padraoinputheight" id="userbird" name="userbird" value="{userbird}" readonly type="text">
+							</div>
+								
+							<div class="input-prepend">
+								<label>Senha</label>
+								<span class="add-on icon-terminal"></span>
+								 <input class="form-control padraoinputheight" id="senhabird" name="senhabird" value="{senhabird}" readonly type="password">
+							</div>
+							
+						</fieldset>
+					  </section>
+					  
+					 <section>
+			  		<fieldset>
+						<legend>Certificado</legend>
+							<div class="span5">
+								<div class="input-prepend">
+									<label>Situação</label>
+									<span class="add-on icon-list"></span>
+									<select name="tpAmb" class="form-control">
+										<option value="2" {sel2}>Homologação</option>
+										<option value="1" {sel}>Produção</option>
+									</select>														
+								</div>
+								<div class="input-prepend">
+									<label>Razão Social</label>
+									<span class="add-on icon-terminal"></span>
+									<input type="text" class="form-control padraoinputheight" name="razaosocial" value="{razaosocial}"/>
+								</div>
+								<div class="input-prepend">
+									<label>Cnpj</label>
+									<span class="add-on icon-terminal"></span>
+									<input type="text" class="form-control padraoinputheight" name="cnpj" value="{cnpj}"/>
+								</div>
+							</div>
+							<div class="span4">
+								<div class="input-prepend">
+								  <label><strong>Arquivo .pfx:</strong></label>   						     
+								  <span class="add-on icon-terminal"></span>
+								  <input type="file" name="arq" class="form-control padraoinputheight" accept=".pfx"/>						
+								</div>
+								<div class="input-prepend">
+									<label>Senha</label>
+									<span class="add-on icon-terminal"></span>
+									<input type="password" class="form-control padraoinputheight" name="senha" value="{senhacert}"/>
+								</div>
+							</div>
+					</fieldset>
+               	  </section>
+					<section>               
+						<button class="btn btn-primary">Cadastrar</button>
+						<button type="reset" class="btn">Voltar</button>                
+					</section>
+            </form> 		
+	</div>
+
+</div>

@@ -1,0 +1,47 @@
+﻿<div class="container">
+  <div class="row">   
+	<section>	
+		
+	   <div class="input-prepend">
+		  <label>Data Inicial</label>
+		  <span class="add-on icon-calendar"></span>
+		  <input class="span2 date-range-filter" id="min" name="dtini" value="" type="text">
+	   </div>
+	   <div class="input-prepend">
+		  <label>Data Final</label>
+		  <span class="add-on icon-calendar"></span>
+		  <input class="span2 date-range-filter" id="max" name="dtfin" value="" type="text">
+	   </div>
+		<br/>
+	  <button class="btn btn-primary" id="coletaxml">COLETAR</button>
+		<br/>
+		<br/>
+	  <table id="dyntableimpnotas" class="table table-bordered">
+
+		<thead>
+			<tr>
+				<th style="text-align:center;"><input type="checkbox" class="checkall" id="selecionarTodosbox" /></th>
+				<th>Data</th>
+				<th>Numero</th>
+				<th>Arquivo</th>
+			</tr>
+		</thead>
+
+		<tbody>
+
+		 <!-- START BLOCK : lista --> 
+			<tr class="gradeA">
+				<td style="text-align:center;"><span class="center"><input type="checkbox" name="id[]" class="cinput" value="{arquivo}" /></span></td>
+				<td>{dEmi}</td>
+				<td>{nNF}</td>
+				<td>{arquivo}</td>
+			</tr>
+		  <!-- END BLOCK : lista -->
+
+		</tbody>
+
+	</table>
+   			
+	  </section>             		
+	</div>
+</div>

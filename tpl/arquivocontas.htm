@@ -1,0 +1,60 @@
+
+<div class="container">
+    <div class="row">
+      <h2>Relatório :: Arquivo Contas ::</h2>
+           
+          <section>
+                  
+                  <form action="" method="post" id="frmarquivocontas" autocomplete="off">
+                      <input type="hidden" name="empresa" id="empresa" value="{empresa}"/>
+                      <fieldset>
+
+                        <div class="input-prepend">
+                            <label>Código Reduzido Inicial:</label>
+                            <span class="add-on icon-terminal"></span>
+                            <input class="span2 padraoinputheight"  name="reduzini" id="reduzini" type="text">
+                        </div>
+
+                        <div class="input-prepend">
+                            <label>Código Reduzido Final:</label>
+                            <span class="add-on icon-terminal"></span>
+                            <input class="span2 padraoinputheight"  name="reduzfim" id="reduzfim" type="text">
+                        </div>
+
+
+                        <div class="input-prepend">
+                            <label>
+                                <input type="checkbox" id="ckclasf" name="ck"/>
+                                Filtrar apenas Código de classificação iniciado em:
+                            </label>
+                        </div>
+                        <div class="input-prepend hide codclassfica">
+                            <label>Código de classificação:</label>
+                            <span class="add-on icon-terminal"></span>
+                            <input class="span2 padraoinputheight" id="codclassfica"  name="codclassfica" type="text">
+                        </div>
+                          
+                      </fieldset>
+                      <input type="hidden" name="act" value="faturamento"/>
+                      
+                      
+                      <input type="button" class="btn btn-primary" id="geraarqcontas" value="Gerar Arquivo">
+                      <input type="submit" class="btn btn-primary" value="Visualizar Dados">
+
+                      <a href="#" class="btn btn-info icon-print" onClick="printDiv('relatoriofatu','arquivodominio.php');">&nbsp;Imprimir</a>
+                  </form>
+          
+          </section>
+              
+          <section>  
+            
+            <div id="relatoriofatu">
+              <div class="rel_form_callback"></div>
+            
+            
+            </div>
+         </section>
+          
+    </div>
+  </div>
+  

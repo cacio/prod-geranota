@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>
+<meta charset="utf-8" />
+<title>:: Prodasiq :: </title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="../css/app.v1.css" type="text/css" />
+<!--[if lt IE 9]> <script src="../js/html5shiv.js"></script> <script src="js/ie/respond.min.js"></script> <script src="js/ie/excanvas.js"></script> <![endif]-->
+<style>
+html,  body {
+  height: 100%;/* The html and body elements cannot have any padding or margin. */
+} 
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+/* Set the fixed height of the footer here */
+#push,  #footer {
+  height: 60px;
+}
+#footer {
+  background-color: #d7dbe4;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+#footer {
+  /*margin-left: -20px;*/
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+}
+/* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+#wrap > .container {
+ padding-top: 60px;
+}
+.container .credit {
+  margin: 20px 0;
+}
+code {
+  font-size: 80%;
+}
+</style>
+</head>
+<body class="">
+<div class="col-xs-6">  
+<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+  <div class="container aside-xl"> <a class="navbar-brand block" href="login.php"><img src="../images/logologins.png"  name="PRODASIQ" title="PRODASIQ"/></a>
+    <section class="m-b-lg">
+      <header class="wrapper text-center"> <strong>Entre para gerar relatorios</strong> </header>
+      <form action="login-exec.php" enctype="multipart/form-data" id="login" method="post" autocomplete="off">
+        <div class="list-group">
+          <div class="list-group-item">
+            <input type="text" placeholder="cnpj" name="gnt-ema" required class="form-control no-border">
+          </div>
+          <div class="list-group-item">
+            <input type="password" name="gtn-sen" placeholder="Senha" required class="form-control no-border">
+          </div>
+        </div>
+		<input type="hidden" name="act" value="login" />
+        <button type="submit" class="btn btn-lg btn-primary btn-block">Entre</button>
+        <div class="text-center m-t m-b btnredefina"><a href="#"><small>Esqueceu sua senha?</small></a></div>
+        <div class="line line-dashed"></div>
+        <p class="text-muted text-center"><small>Não tem uma conta?</small></p>
+        <a href="#" id="btncadconta" class="btn btn-lg btn-default btn-block">Criar uma conta</a>
+      </form>
+    </section>
+  </div>
+</section>
+</div>
+<div class="col-xs-6 splash" style="border-left: 1px #7a7a7a solid; height: 100%;padding: 0px;">  
+  <div class="proda_img_right"><img src="../images/right.png" /></div>
+</div>
+
+<div class="col-xs-6 hidden cadconta" style="border-left: 1px #7a7a7a solid; height: 100%;padding: 0px;"> 
+ <section class="animated fadeInUp" style="overflow-y:scroll; height:600px; padding:10px;">
+   <form id="fmrcadcli">
+    <input type="hidden" name="act" value="inserir">
+   <div class="col-xs-12"> 
+      <legend>Dados Empresa</legend>
+      
+      <div class="col-xs-3">
+          <label>Cnpj</label>
+          <input class="form-control no-border" id="cnpj" name="cnpj" value="" type="text" data-validation="required" data-validation-error-msg="Digite um Cnpj">
+      </div>
+
+      <div class="col-xs-3">
+          <label>Ins:</label>
+          <input class="form-control no-border inpupupper" id="ins" name="ins" value="" type="text">
+      </div>
+
+      <div class="col-xs-5">
+          <label>RAZÃO SOCIAL:</label>
+          <input class="form-control no-border inpupupper" id="razao" name="razao" value="" type="text" data-validation="required" data-validation-error-msg="Digite uma razão social">
+      </div>
+      
+      <div class="col-xs-5">
+          <label>NOME FANTASIA:</label>
+          <input class="form-control no-border inpupupper" id="fanta" name="fanta" value="" type="text">
+      </div>          
+
+   </div>    
+   <div class="col-xs-12"> 
+      <legend>Endereço Empresa</legend>
+        
+      <div class="col-xs-3">
+          <label>CEP:</label>
+          <input class="form-control no-border inpupupper" id="cep" name="cep" value="" type="text" data-validation="required" data-validation-error-msg="Digite um Cep">
+      </div>  
+
+      <div class="col-xs-4">
+          <label>ENDEREÇO:</label>
+          <input class="form-control no-border inpupupper" id="endereco" name="endereco" value="" type="text">
+      </div>
+
+      <div class="col-xs-2">
+          <label>NUMERO:</label>
+          <input class="form-control no-border inpupupper" id="numero" name="numero" value="" type="text">
+      </div> 
+
+      <div class="col-xs-3">
+          <label>BAIRRO:</label>
+          <input class="form-control no-border inpupupper" id="bairro" name="bairro" value="" type="text">
+      </div>
+
+      <div class="col-xs-4">
+          <label>COMPLEMENTO:</label>
+          <input class="form-control no-border inpupupper" id="comple" name="comple" value="" type="text">
+      </div>
+
+      <div class="col-xs-4">
+          <label>CIDADE:</label>
+          <input class="form-control no-border inpupupper" id="cidade" name="cidade" value="" type="text">
+      </div>
+
+      <div class="col-xs-3">
+          <label>ESTADO:</label>
+          <input class="form-control no-border inpupupper" id="estado" name="estado" value="" type="text">
+      </div>
+
+   </div>
+
+   <div class="col-xs-12">
+      <legend>Contato</legend>
+      
+      <div class="col-xs-4">
+          <label>TELEFONE:</label>
+          <input class="form-control no-border inpupupper" id="telefone" name="telefone" value="" type="text">
+      </div>
+            
+
+   </div>
+   <div class="col-xs-12">
+       <legend>Acesso</legend>
+      
+       <div class="col-xs-4">
+          <label>E-MAIL:</label>
+          <input class="form-control no-border inpupupper" id="email" name="email" data-validation="email" value="" type="text"  data-validation-error-msg="Digite um Email valido">
+       </div>
+
+       <div class="col-xs-4">
+          <label>PALAVRA CHAVE:</label>
+          <input class="form-control no-border inpupupper" id="pschave" name="pschave" value="" type="password" data-validation="strength" data-validation-strength="2">
+      </div>
+
+   </div>
+   <hr/>
+   <div class="col-xs-12" style="margin-top: 30px;">
+     <button type="submit" class="btn btn-lg btn-primary btn-block">CADASTRAR</button>
+   </div>
+ </form>
+ </section>
+</div>
+
+<div class="col-xs-6 hidden redefinasenha" style="border-left: 1px #7a7a7a solid; height: 100%;padding: 0px;"> 
+  <section class="animated fadeInUp" style="overflow-y:scroll; height:600px; padding:10px;">
+
+    <form class="form-horizontal form-material" id="refinaloginform" action="recuperarpassword-exec.php" method="post">
+      <input type="hidden" name="token" value="{token}">
+      <input type="hidden" name="act" value="recuperar">
+      <h3 class="box-title m-b-20">Redefinir Senha</h3>
+      
+      <div class="form-group ">
+        <div class="col-xs-12">
+            <input class="form-control" type="text" name="cnpjemp" required="" placeholder="Cnpj da Empresa">
+        </div>
+      </div>
+
+      <div class="form-group ">
+          <div class="col-xs-12">
+              <input class="form-control" type="email" name="email" required="" placeholder="Seu email">
+          </div>
+      </div>
+
+      <!--<div class="form-group ">
+          <div class="col-xs-12">
+              <input class="form-control" type="password" required="" name="passw" placeholder="Nova Senha">
+          </div>
+      </div>
+      <div class="form-group">
+          <div class="col-xs-12">
+              <input class="form-control" type="password" required="" name="passw-conf" placeholder="Confirma Nova Senha">
+          </div>
+      </div>
+
+      <div class="form-group">
+          <div class="col-md-12">
+              <div class="checkbox checkbox-success p-t-0 p-l-10">
+                  <input id="checkbox-signup" type="checkbox">
+                  <label for="checkbox-signup"> Eu concordo com todos os <a href="#">Termos</a></label>
+              </div>
+          </div>
+      </div>-->
+
+      <div class="form-group text-center m-t-20">
+          <div class="col-xs-12">
+              <button class="btn btn-info btn-lg btn-block text-uppercase waves-effect waves-light" type="submit">REDEFINIR SENHA</button>
+          </div>
+      </div>
+     
+  </form>
+
+  </section>
+  </div>
+
+<!-- footer -->
+<footer id="footer">
+  <div class="text-center padder">
+    <p> <small><a href="http://www.prodasiq.com.br">PRODASIQ</a><br>
+      &copy; 2019</small> </p>     
+  </div>
+</footer>
+<!-- / footer -->
+<!-- Bootstrap -->
+<!-- App -->
+<script src="../js/app.v1.js"></script>
+<script src="../js/app.plugin.js"></script>
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
+<script src="../js/jquery.maskedinput.js"></script>
+<script src="../js/metodo_login.js"></script>
+</body>
+</html>

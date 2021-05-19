@@ -1,0 +1,38 @@
+
+<div class="container">
+    <div class="row">
+      <h2>Informar Histórico padrão</h2>
+      <section class="span12">
+        <form action="../php/historicopadrao-exec.php" method="post" autocomplete="off">
+          <input type="hidden" name="act"  value="alterar"/>
+          <input type="hidden" name="id"  value="{id}"/>
+          {msg}
+          <fieldset>
+           <div class="span12">
+            
+            <div class="input-prepend">
+                <label><strong>Código:</strong></label>
+                <span class="add-on icon-terminal"></span>
+                <input class="span2 padraoinputheight" name="codigo" type="text" value="{codigo}" required>
+              </div>
+           </div>   
+           <div class="span12">
+            <div class="input-prepend">
+              <label><strong>Histórico:</strong></label>
+              <textarea name="hist" id="hist" rows="5" class="span6" required>{desc}</textarea>              
+            </div>
+            </div>
+            
+            <div class="span12">
+                <button type="submit" class="btn btn-primary">Alterar</button>                        
+                <a href="../php/listahistoricopadrao.php" class="btn">Voltar</a>
+            </div>              
+            
+
+          </fieldset>
+        </form>
+      </section>
+    
+    </div>
+  </div>
+  

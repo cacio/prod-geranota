@@ -1,0 +1,51 @@
+<div class="container" style="padding-top: 60px;">
+  <div class="row">
+    <h2>Relatório :: Estoque Produto CST ::</h2>
+     	
+        <section>
+        		
+                <form action="" method="post" id="frmestoqueprod">
+                	<input type="hidden" name="empresa" id="empresa" value="{empresa}"/>
+                    <fieldset>
+						
+						<div class="span12">
+																																	
+							<!--<div class="input-prepend">
+							  <label>Data Inicial:</label>
+							  <span class="add-on fa fa-calendar"></span>
+							  <input class="span2" id="dataini"  name="dataini" type="text">
+							</div>
+
+							<div class="input-prepend">
+							  <label>Data Final:</label>
+							  <span class="add-on fa fa-calendar"></span>
+							  <input class="span2" id="datafin" name="datafin" type="text">
+							</div>-->
+							<div class="input-prepend">
+							  <label>
+								<input name="rd" type="checkbox">
+								Desconsiderar estoque zero:
+							  </label>
+							  							  
+							</div>
+                        </div>
+						
+												
+					   <div class="span12">
+						<button type="submit" class="btn btn-primary"><i class="fa fa-refresh"></i> Gerar</button>
+						 <button type="reset" class="btn btn-primary"><i class="fa fa-close"></i> Limpar Filtro</button>  
+						<button type="button" class="btn btn-info" onClick="printDiv('relatoriofatu','contasareceberporrepresentante.php');"><i class="fa fa-print"></i> Imprimir</button>
+					   </div>
+                   				
+                    </fieldset>
+                	<input type="hidden" name="act" value="faturamento"/>			        
+                </form>
+        
+        </section>
+        	
+        <section>           
+          <div id="relatoriofatu"></div>		  
+        </section>
+      
+  </div>
+</div>

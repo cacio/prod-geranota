@@ -1,0 +1,57 @@
+<div class="container">
+    <div class="row">
+    <br/>
+    <br/>
+    <h2>Lista de Financ Contas</h2>
+
+   <form action="">
+    
+    <div class="input-prepend input-append">
+        <label><strong>Pesquisar:</strong></label>
+        <span class="add-on icon-search"></span>
+        <input class="span8 padraoinputheight" id="new-search" name="new-search" type="search">
+    </div>
+
+    <div class="input-prepend">
+        <label>
+            <input type="checkbox" name="ckfaltam"/>
+                Faltam informar
+        </label>
+     </div> 
+    <table id="dyntableclientes" class="table table-bordered">
+
+    <thead>
+
+    <tr>
+        <th>Código</th>
+        <th>Descrição</th>    
+        <th>Histórico Padrão</th>   
+    </tr>
+
+    </thead>
+
+    <tbody>
+    <!-- START BLOCK : listar --> 
+    <tr id="{codigo}" >
+        <td>{reduzido}</td>
+        <td>{descricao}</td>
+        <td  class="centeralign">
+            <div id="fil_{codigo}" class="{cl}">
+                <div class="input-prepend">            
+                    <input type="text" id="histp_{codigo}" class="histpadrao span1 padraoinputheight"  value="{CODHISTORICO}" />
+                    <input type="hidden" id="idhistp_{codigo}" class="" maxlength="5" value="{id}" />            
+                    <span class="add-on msg_{codigo}"></span>
+                    
+                </div>
+                <span class="help-inline txthistpadrao_{codigo}">{historico}</span>    
+            </div>
+        </td>
+    </tr>
+    <!-- END BLOCK : listar -->
+
+    </tbody>
+
+    </table>
+    </form>
+    </div>
+</div>

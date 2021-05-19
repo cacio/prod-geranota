@@ -1,0 +1,56 @@
+<div class="container">
+    <div class="row">
+    <h2>Lista de Fornecedores</h2>
+
+   <form action=""> 
+    
+    <div class="input-prepend input-append">
+        <label><strong>Pesquisar:</strong></label>
+        <span class="add-on icon-search"></span>
+        <input class="span8 padraoinputheight" id="new-search" name="new-search" type="search">
+    </div>
+
+     <div class="input-prepend">
+        <label>
+            <input type="checkbox" name="ckfaltam"/>
+                Faltam informar
+        </label>
+     </div>  
+    <table id="dyntableclientes" class="table table-bordered dataTable no-footer">
+
+    <thead>
+
+    <tr>
+        <th>Código</th>
+        <th>Descrição</th>    
+        <th>Conta Contabil (Reduzido)</th>   
+    </tr>
+
+    </thead>
+
+    <tbody>
+    <!-- START BLOCK : listar --> 
+    <tr id="{codigo}" >
+        <td>{codigo}</td>
+        <td>{nome}</td>
+        <td>
+            <div id="fil_{codigo}" class="{cl}">
+            <div class="input-prepend">            
+                <input type="text" id="contctb2_{codigo}" class="contactbfor span1 padraoinputheight"  value="{REDUZIDO}" />
+                <input type="hidden" id="contctb_{codigo}" class="" maxlength="5" value="{CONTA_CTB}" />            
+                <span class="add-on msg_{codigo}"></span>
+                <button class="btn btn-primary bt-finccontas" type="button" style="height: 33px;"><i class="icon-plus"></i></button>
+                
+            </div>
+            <span class="help-inline txtconta_{codigo}">{DESCRICAO}</span>    
+            </div>
+        </td>
+    </tr>
+    <!-- END BLOCK : listar -->
+
+    </tbody>
+
+    </table>
+    </form>
+    </div>
+</div>

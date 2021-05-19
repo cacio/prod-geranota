@@ -1,0 +1,353 @@
+﻿
+<div class="container">
+    <!-- START BLOCK : certificado --> 
+        <div class="row-fluid"> 
+            <div class="span12">
+                <section>
+                    <legend>Configuração pelo Certificado</legend>
+                    <form method="post" action="config-exec.php" enctype="multipart/form-data" autocomplete="off">
+                        <input type="hidden" name="act" value="inserirnovo"/>
+                        <fieldset>
+                            <div class="span4">
+                                <div class="input-prepend">
+                                <label><strong>Arquivo .pfx:</strong></label>   						     
+                                <span class="add-on icon-terminal"></span>
+                                <input type="file" name="arq" class="form-control" accept=".pfx"/>						
+                                </div>
+                                <div class="input-prepend">
+                                    <label>Senha</label>
+                                    <span class="add-on icon-terminal"></span>
+                                    <input type="password" class="form-control" name="senha" value="{senhacert}"/>
+                                </div>
+                            </div>                            
+                        </fieldset>
+                        <button type="submit" class="btn btn-primary">Gravar</button>
+                    </form>
+                </section>
+            </div>
+        </div>
+        <!-- END BLOCK : certificado -->
+            <div class="row-fluid">                
+             
+
+            <div class="span12">    
+                <section>                    
+                    <div class="sel_arq hide">
+                        <label>
+                            <input type="radio" name="RadioGroup1" value="1" id="RadioGroup1_0">
+                            Importar XML (Fornecedor)</label>
+
+                        <label>
+                            <input type="radio" name="RadioGroup1" value="2" id="RadioGroup1_1" checked>
+                            Leitura DANFE (Chave de Acesso)</label>
+
+                            <label>
+                                <input type="radio" name="RadioGroup1" value="3" id="RadioGroup1_2">
+                                Buscar NF-e Base SEFAZ (NSU)</label>
+
+                    </div>              
+
+                    <ul class="m-menu-notas">
+                        <li>
+                            <a href="#">
+                                <label for="rdntoas1_0">
+                                    <img src="../images/xml.png" width="60" />    
+                                    <input type="radio" name="rdntoas" value="1" id="rdntoas1_0">
+                                    Importar XML (Fornecedor)
+                                    </label>
+                                    
+                                
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" class="selecionado">
+                                <label for="rdntoas1_1">
+                                    <img src="../images/bip.png" width="60" />     
+                                    <input type="radio" name="rdntoas" value="2" id="rdntoas1_1">
+                                        Leitura DANFE (Chave de Acesso)
+                                    </label>                                
+                                    
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <label for="rdntoas1_2">
+                                    <img src="../images/nfe.png" width="60" />
+                                    <input type="radio" name="rdntoas" value="3" id="rdntoas1_2">
+                                    Buscar NF-e Base SEFAZ (NSU)
+                                    </label>
+                                    
+                            </a>
+                        </li>
+                    </ul>
+
+                </section>
+                <section id="por_arquivo" class="hide">
+                    <form action="#" enctype="multipart/form-data" method="post" id="upload" autocomplete="off">
+                        <fieldset>
+                            <legend><span class="icon-cogs"></span>&nbsp;Entrada via XML (fornecedor)</legend>
+                                <div class="msg"></div>                               
+                                <div class="span6">
+                                    <div class="input-prepend">
+                                        <label for="file_upload">Arquivo XML:</label>
+                                        <span class="add-on icon-terminal"></span>
+                                        <input type="file" name="file_upload" class="form-control span12" id="file_upload" multiple>
+                                    </div>
+                                </div>
+                                <div class="span5">
+                                    <label>AÇÃO:</label>
+                                    <input class="btn btn-primary" type="submit" name="submit"   value="Enviar">
+                                    <a  href="../php/admin.php" class="btn">Voltar</a>
+                                </div>
+                        </fieldset>
+                    </form>
+                </section>
+            
+                <section id="por_barras" class="hide">
+                    <form action="#" enctype="multipart/form-data" method="post" id="upload2"/>
+                        <fieldset>
+                            <legend><span class="icon-cogs"></span>&nbsp;Entrada via DANFE (chave de acesso)</legend>
+                            <div class="barra_form_callback"></div>
+                            <div class="msg"></div>
+                                <div class="span3"> 
+                                    <div class="input-prepend">
+                                        <label>Tipo Manifestação:</label>
+                                        <select name="manif">
+                                            <option value="" selected>Informe uma operação</option>
+                                            <option value="210200">Confirmação da Operação</option>
+                                            <option value="210210">Ciência da Operação</option>
+                                            <option value="210220">Desconhecimento da Operação</option>
+                                            <option value="210240">Operação não Realizada</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="span4"> 
+                                    <div class="input-prepend">
+                                        <label for="file_upload">Chave de acesso:</label>
+                                        <span class="add-on icon-terminal"></span>
+                                        <input type="text" name="file_upload" class="form-control span12" style="width: 350px;"  id="file_upload2" maxlength="44">
+                                    </div>
+                                </div>
+
+                                <input type="hidden" id="cfopsn" name="cfopsn" value=""/>
+                                <div class="span2">    
+                                    <label>AÇÃO:</label>
+                                    <a  href="#" id="subimp" class="btn btn-primary">Enviar</a>
+                                    <a  href="../php/admin.php" class="btn">Voltar</a>
+                                </div>                            
+                        </fieldset>
+                    </form>
+                </section>
+                
+                <section id="por_nsu" class="hide">
+                    
+                        <legend>
+                            Entrada via Base SEFAZ (NSU)						
+                            <div class="span5 pull-right">
+                                <fieldset class="fieldset">
+                                    <h3>Legenda</h3> 
+                                    <i class="fa fa-info-circle text-info"></i> NF-e Sem manifestação
+                                    <i class="fa fa-check-circle text-success"></i>NF-e Manifestado<br><br>
+                                </fieldset>
+                            </div>
+                        </legend>
+                        <ul class="menuadm">
+                            <li>
+                                <a href="#" class="btnfilternfe"><i class="fa fa-filter fa-3x"></i>Filtro Avançado</a>
+                            </li>
+                            <li>
+                                <a href="#" class="btnnovasnfes"><i class="fa fa-search-plus fa-3x"></i>Pesquisa novas NF-e</a>
+                            </li>
+
+                            <li>
+                                <a href="#" id="tpmanifest"><i class="fa fa-outdent fa-3x"></i>Tipo de Manifestação</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="tpmanifest" data-id="210200" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Confirmação da Operação</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="tpmanifest" data-id="210210" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Ciência da Operação</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="tpmanifest" data-id="210220" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Desconhecime<br>nto da Operação</a>
+                            </li>
+
+                            <li>
+                                <a href="#" class="tpmanifest" data-id="210240" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Operação não Realizada</a>
+                            </li>
+
+                        </ul>
+                        
+                        <div class="msgnsu"></div>
+                        
+                        <div class="text-center" id="carregando"></div>
+                        <div class="tabnfes">
+    
+                        </div>
+                    
+                 </section>
+
+                <form action="../php/relacionamento-exec.php" method="post" id="relaciona" autocomplete="off">
+                                
+                    <section id="nota_dados" class="hide">
+                        <legend><span class="icon-list"></span>&nbsp;Dados da NF-e</legend>
+                        <div class="span1"> Número:<label id="nota_numero"></label>  </div> 
+                        <div class="span2"> Data Emissão:<label id="nota_dtemi"></label>  </div>
+                        <div class="input-prepend">
+                            <label >Data Entrada:</label>
+                            <span class="add-on icon-calendar"></span>
+                            <input type="text" name="dtentrada" class="span6" id="dtentrada"/>
+                        </div>
+                        <div class="input-prepend">
+                            <label >CFOP:<i class="cf"></i></label>
+                            <span class="add-on icon-terminal"></span>
+                            <input type="text" name="cfop" class="span6" id="cfop"/>
+                        </div>
+
+                        <div class="input-prepend vlguiast hide">
+                            <label>Valor da Guia ST:</label>
+                            <span class="add-on"><strong>R$</strong></span>
+                            <input type="text" name="vlguiast" class="span6 text-right" id="vlguiast"/>
+                        </div>
+
+                        <input type="hidden" id="cfopsn" name="cfopsn" value=""/>
+                                            
+                    </section>
+                    
+                    <section id="for_dados" class="hide">
+                       
+                        <fieldset>
+                            <legend><span class="icon-user"></span>&nbsp;Dados do Fornecedor (emitente)</legend>
+                            <div class="span5" style="display: inline-flex;font-weight: bold;">Codigo / Nome:<label style="margin-left: 5px;" id="for_nome"></label>  </div>    
+                            <div class="span4" style="display: inline-flex;font-weight: bold;">Cnpj / Cpf: <label style="margin-left: 5px;" id="for_cnpjcpf"></label></div>
+                            <div class="span3" style="display: inline-flex;font-weight: bold;">Endereço: <label style="margin-left: 5px;" id="for_endereco"></label></div>     
+                            <div class="span3" style="display: inline-flex;font-weight: bold;">Cidade: <label style="margin-left: 5px;" id="for_cidade"></label></div>
+                            <div class="span3" style="display: inline-flex;font-weight: bold;">Estado:<label style="margin-left: 5px;" id="for_estado"></label></div>
+                                                 
+                        </fieldset>
+                        
+                        <fieldset>
+                            <legend><span class="icon-list"></span>&nbsp;Itens da NF-e</legend>
+                            <table id="dyntable" class="table table-bordered">
+                                <thead>            
+                                    <tr>                
+                                        <th>Código</th>
+                                        <th>Descrição</th>
+                                        <th>QTD</th>
+                                        <th>R$ Unit.</th>
+                                        <th>R$ Sub Total</th>
+                                        <th>CFOP</th>
+                                        <th>Produto Relacionado</th>
+                                </tr>                
+                                </thead>                
+                                <tbody>
+                            
+                                </tbody>                
+                            </table>                    	
+                        </fieldset>                    			
+                    </section>
+                    
+                    <section id="total_dados" class="hide text-right">
+                        <div class="span12"> Total da nota:<label id="totalnota"></label>  </div> 
+                        <br/>
+                        <br/>
+                    </section>
+                    
+                    <section id="btnaction" class="hide">            
+                        <p class="stdformbutton text-right">   
+                            <input class="btn btn-primary" type="submit" name="submit" value="Salvar">
+                        </p>            
+                    </section>
+                
+                </form>
+            </div>
+        </div>
+
+   </div>
+
+   <div id="apropria" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <!--<form id="frmapropriacao" method="post">-->
+    <div class="modal-header">
+       <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+       <h3 id="myModalLabel">Apropriação Despesas/Custos</h3>
+     </div>
+     <div class="modal-body">
+       
+       <fieldset>
+           <legend><span class="icon-list"></span>&nbsp;Dados da nota</legend>
+           
+           <div class="span3">Codigo / Nome:<label id="for_nomes"></label>  </div>
+           <div class="span3"> Nota Fiscal:<label  id="nota_numeros"></label>  </div>
+           <div class="span3"> Emissão:<label  id="dt_emissao"></label>  </div>  	
+           <div class="span3"> Valor total nota R$:<label id="valor_tot"></label>  </div>
+           <div class="span3"> Valor a apropriar R$:<label id="valor_totpropria"></label>  </div> 
+             <input type="hidden" id="valor_tots" value="0"/>
+       </fieldset>
+      
+       <fieldset>
+           <legend><span class="icon-list"></span>&nbsp;Formulario</legend>
+              <input type="hidden" id="cfor" name="cfor"/>
+           <div class="input-prepend">
+               <label><strong>R$ Valor:</strong></label>
+               <span class="add-on icon-dollar"></span>
+               <input type="text" name="valor" id="vl"  required class="span2 vl2"  />
+           </div>
+          
+           <div class="input-prepend">
+               <label><strong>Centro:<i class="mp"></i></strong></label>
+               <span class="add-on icon-search"></span>
+               <input type="text" name="centro" id="centro" onKeyPress="buscacentro();" required class="span2"  />
+               <input type="hidden" id="xcentro"/>	           
+               
+           </div>
+           
+           <div class="input-prepend">
+               <label><strong>Contas:<i class="mpc"></i></strong></label>
+               <span class="add-on icon-search"></span>
+               <input type="text" name="conta" id="conta" onKeyPress="buscafinanccentro();" required class="span2"  />
+               <input type="hidden" id="xconta"/>
+           </div>
+           
+           <div class="input-prepend">
+           <span>Ação:</span>
+            <div class="input-group">  
+                 <div class="btn-group">
+                 <button type="submit" class="btn btn-success" id="apm"><span class="icon-plus"></span></button>
+                 <button type="submit" onClick="deletar();" class="btn btn-danger"><span class="icon-minus"></span></button>                       
+               </div>
+           </div> 
+         </div>  
+           
+           <table id="dtapropria" class="table table-bordered">
+               <thead>
+           
+                   <tr>
+                       <th><div align="center"><input type="checkbox" class="checkall" id="selecionarTodosbox" /></div></th>
+                       <th>Centro Custo</th>
+                       <th>Conta</th>
+                       <th>R$ Total</th>
+                  </tr>
+           
+               </thead>
+           
+               <tbody>
+           
+                               
+           
+               </tbody>
+           
+           </table>
+               <input type="hidden" id="valortotal" value="0"/>
+                  <label id="subtotal" style="text-align:right;"></label>		
+       </fieldset>
+       
+     </div>
+     <div class="modal-footer">
+       <!--<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>-->
+       <button class="btn btn-primary" id="svs">Salvar</button>
+     </div>
+   <!--</form>-->
+   </div>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" class="app">
+<head>
+<meta charset="utf-8" />
+<title>:: Prodasiq :: </title>
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+<link rel="stylesheet" href="../css/app.v1.css" type="text/css" />
+<!--[if lt IE 9]> <script src="../js/html5shiv.js"></script> <script src="js/ie/respond.min.js"></script> <script src="js/ie/excanvas.js"></script> <![endif]-->
+<style>
+html,  body {
+  height: 100%;/* The html and body elements cannot have any padding or margin. */
+} 
+#wrap {
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  /* Negative indent footer by it's height */
+  margin: 0 auto -60px;
+}
+/* Set the fixed height of the footer here */
+#push,  #footer {
+  height: 60px;
+}
+#footer {
+  background-color: #d7dbe4;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Lastly, apply responsive CSS fixes as necessary */
+@media (max-width: 767px) {
+#footer {
+  /*margin-left: -20px;*/
+  margin-right: -20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+}
+/* Custom page CSS
+      -------------------------------------------------- */
+      /* Not required for template or sticky footer method. */
+
+#wrap > .container {
+ padding-top: 60px;
+}
+.container .credit {
+  margin: 20px 0;
+}
+code {
+  font-size: 80%;
+}
+</style>
+</head>
+<body class="">
+<div class="col-xs-6">  
+<section id="content" class="m-t-lg wrapper-md animated fadeInUp">
+  <div class="container aside-xl"> <a class="navbar-brand block" href="login.php"><img src="../images/logologins.png"  name="PRODASIQ" title="PRODASIQ"/></a>
+    <section class="m-b-lg">
+      <header class="wrapper text-center"> <strong>Redefinir Senha</strong> </header>
+      <form action="recuperarpassword-exec.php" enctype="multipart/form-data" id="refinaloginform" method="post">
+		<input type="hidden" name="token" value="{token}">
+		<input type="hidden" name="cnpj" value="{cnpj}">
+        <input type="hidden" name="act" value="redefinir">
+        <div class="list-group">
+          <div class="list-group-item">
+            <input class="form-control" type="password" required="" name="passw" placeholder="Nova Senha">
+          </div>
+          <div class="list-group-item">
+            <input class="form-control" type="password" required="" name="passw-conf" placeholder="Confirma Nova Senha">
+          </div>
+        </div>
+        <button type="submit" class="btn btn-lg btn-primary btn-block">REDEFINIR SENHA</button>        
+        <div class="line line-dashed"></div>
+		<p>já tem uma conta? <a href="login.php" class="text-info m-l-5"><b>LOGAR</b></a></p>        
+      </form>
+    </section>
+  </div>
+</section>
+</div>
+<div class="col-xs-6 splash" style="border-left: 1px #7a7a7a solid; height: 100%;padding: 0px;">  
+  <div class="proda_img_right"><img src="../images/right.png" /></div>
+</div>
+
+
+
+<!-- footer -->
+<footer id="footer">
+  <div class="text-center padder">
+    <p> <small><a href="http://www.prodasiq.com.br">PRODASIQ</a><br>
+      &copy; 2019</small> </p>     
+  </div>
+</footer>
+<!-- / footer -->
+<!-- Bootstrap -->
+<!-- App -->
+<script src="../js/app.v1.js"></script>
+<script src="../js/app.plugin.js"></script>
+<script src="../js/jquery-1.10.2.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+
+<script src="../js/jquery.maskedinput.js"></script>
+<script src="../js/metodo_login.js"></script>
+</body>
+</html>
