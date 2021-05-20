@@ -1249,7 +1249,8 @@
 						'nfe_totalnota'=>number_format($nfe_totalnota,2,',','.'),
 						'nfe_situacao'=>"{$nfe_situacao}",
 						'situacao_manifesto'=>$situacao_manifesto,
-						'icon'=>$icon
+						'icon'=>$icon,
+						'id_status'=>$id_status
 					));
 
 				}
@@ -1311,6 +1312,12 @@
 		
 					$chavenfe     = $_REQUEST['chavenfe'];		
 					$condicao[]   = " n.nfe_chave = '".$chavenfe."' ";		
+				}
+
+				if(isset($_REQUEST['tipo']) and !empty($_REQUEST['tipo'])){
+		
+					$tipo	      = $_REQUEST['tipo'];		
+					$condicao[]   = " n.id_status <> '".$tipo."' ";		
 				}
 
 				$condicao[]   = " n.id_emp = '".$_SESSION['idemp']."' ";
@@ -1380,7 +1387,8 @@
 						'nfe_totalnota'=>number_format($nfe_totalnota,2,',','.'),
 						'nfe_situacao'=>"{$nfe_situacao}",
 						'situacao_manifesto'=>$situacao_manifesto,
-						'icon'=>$icon
+						'icon'=>$icon,
+						'id_status'=>$id_status
 					));
 
 				}

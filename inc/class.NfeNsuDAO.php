@@ -247,7 +247,7 @@ class NfeNsuDAO{
                     n.situacao_manifesto
                 FROM notas_nfe_nsu n
                 inner join status s on (s.id = n.id_status) '.$where.' order by n.nfe_dataemissao desc';
-        
+        //echo "{$sql}";
         $res = $dba->query($sql);
         $num = $dba->rows($res);
 

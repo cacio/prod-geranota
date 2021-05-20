@@ -74,7 +74,7 @@
                                 <label for="rdntoas1_2">
                                     <img src="../images/nfe.png" width="60" />
                                     <input type="radio" name="rdntoas" value="3" id="rdntoas1_2">
-                                    Buscar NF-e Base SEFAZ (NSU)
+                                         Manifestação do Destinatário
                                     </label>
                                     
                             </a>
@@ -142,7 +142,7 @@
                 <section id="por_nsu" class="hide">
                     
                         <legend>
-                            Entrada via Base SEFAZ (NSU)						
+                            Lançamento NF-e via Manifestação do Destinatário						
                            
                         </legend>
                         <ul class="m-menu-notas2">
@@ -179,16 +179,51 @@
                             <fieldset class="fieldset">
                                 <h3>Legenda</h3> 
                                 <i class="fa fa-info-circle text-info"></i> NF-e Sem manifestação
-                                <i class="fa fa-check-circle text-success"></i>NF-e Manifestado<br><br>
+                                <i class="fa fa-check-circle text-success"></i>NF-e Manifestado<br><br>                                
+                            </fieldset>
+                            <fieldset class="checkbox-group">	
+                                <div class="checkbox">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" class="checkbox-input" value="1"/>
+                                        <span class="checkbox-tile">
+                                            <span class="checkbox-icon">
+                                                <i class="fa fa-info-circle fa-2x"></i>
+                                            </span>
+                                            <span class="checkbox-label">Sem <br> Manifestação<span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" class="checkbox-input" value="2" />
+                                        <span class="checkbox-tile">
+                                            <span class="checkbox-icon">
+                                                <i class="fa fa-check-circle fa-2x"></i>
+                                            </span>
+                                            <span class="checkbox-label">Com Manifestação</span>
+                                        </span>
+                                    </label>
+                                </div>
+                                <div class="checkbox">
+                                    <label class="checkbox-wrapper">
+                                        <input type="checkbox" class="checkbox-input" value="3"/>
+                                        <span class="checkbox-tile">
+                                            <span class="checkbox-icon">
+                                                <i class="fas fa-database fa-2x"></i>
+                                            </span>
+                                            <span class="checkbox-label">Notas Não importadas</span>
+                                        </span>
+                                    </label>
+                                </div>
+
                             </fieldset>
                         </ul>
                        
-                           
                        
                         <div class="msgnsu"></div>
                         
                         <div class="text-center" id="carregando"></div>
-                        <div class="tabnfes">
+                        <div class="tabnfes" style="width: 100%;">
     
                         </div>
                     

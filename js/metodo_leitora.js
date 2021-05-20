@@ -29,7 +29,7 @@ $(document).ready(function(e) {
 		
 		$(".m-menu-notas li a").removeClass('selecionado');
 		this.closest('a').classList.toggle('selecionado', this.checked);
-
+		
 		if($(this).val() == 1){			
 			$("#por_arquivo").show();
 			$("#por_barras").hide();		
@@ -37,7 +37,13 @@ $(document).ready(function(e) {
 		}else if($(this).val() == 2){			
 			$("#por_arquivo").hide();
 			$("#por_nsu").hide();
-			$("#por_barras").show();			
+			$("#por_barras").show();
+			
+			$("#nota_dados").hide();
+			$("#for_dados").hide();
+			$("#total_dados").hide();
+			$("#btnaction").hide();
+
 		}else if($(this).val() == 3){
 			
 			$("#por_nsu").show();
@@ -46,7 +52,7 @@ $(document).ready(function(e) {
 		}
 		
 	});
-	
+
 });
 
 $(document).ready(function () {
@@ -155,7 +161,7 @@ $(function()
 	$("#subimp").attr('disabled',true);
 	
 	$("#subimp").click(function(){
-		var dialog;	
+		var dialoger;	
 		var dialognsu;
 			
 		var manifest = $("select[name='manif']").val();
@@ -179,22 +185,22 @@ $(function()
             cache: false,
             dataType: 'json',
 			beforeSend:function(){
-				dialog = $.dialog({
-						title: '<img src="../images/icon.ico" width="15" /> Sistema',
-						closeIcon: true,
-						content: 'Aguarde<img src="../images/loader19.gif"/> Fazendo Comunicação com a SEFAZ!',
-					});	
+									
+				ajax_load("open");
+				$('.ajax_load_box_title').html('Aguarde<img src="../images/loader19.gif"/> Fazendo Comunicação com a SEFAZ!');
 			},
             success: function(data, textStatus, jqXHR)
             {
-		
-				dialog.close();
+				
+				ajax_load("close");
+				$('.ajax_load_box_title').html('Aguarde, carregando...');
+				//$('.jconfirm-closeIcon').click();
             	if(typeof data.error === 'undefined')
             	{
             		// Sucesso até chamar a função para processar o formulário
             		var file = data.files;
 					
-					console.log('sucesso: ' + data.files);
+					//console.log('sucesso: ' + data.files);
 					//$('#msg').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Ok Tudo certo!</div>');
 					var view = '<div class="message success">Ok Tudo certo!</div>';
 					$(".barra_form_callback").html(view);
@@ -202,7 +208,7 @@ $(function()
 
 					submitForm2(data);
 					$("#subimp").focus();
-										
+								
             	}
             	else
             	{
@@ -212,11 +218,12 @@ $(function()
             		//console.log('ERRORS: ' + data.error);
 					//$('#msg').html('<div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Aviso!</h4>'+data.error+'</div>')
 					$("#subimp").focus();
+					
             	}
             },
             error: function(jqXHR, textStatus, errorThrown)
             {
-            	dialog.close();
+            	
 				//console.log('ERRORS2: ' + textStatus);
 				
 				var caminho = jqXHR.responseText.search('DATABASE.FDB" Error while trying to open file O sistema');
@@ -238,6 +245,7 @@ $(function()
 				//$('#msg').html('<div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Aviso!</h4>'+jqXHR.responseText+'</div>');
 				 bootbox.hideAll();
 				$("#subimp").focus();
+				//dialog.close();
             	
             }
         });
@@ -250,6 +258,17 @@ $(function()
 			$("#subimp").focus();
 			
 		}
+		function ajax_load(action) {
+			ajax_load_div = $(".ajax_load");
+
+			if (action === "open") {
+				ajax_load_div.fadeIn(200).css("display", "flex");
+			}
+
+			if (action === "close") {
+				ajax_load_div.fadeOut(200);
+			}
+		}
 	});
 
 	
@@ -258,7 +277,7 @@ $(function()
  function submitForm2(data2)
 	{
 		//data.files
-		var dialog;
+		var dialogs;
 		
 		$.ajax({
 			url: '../php/relacionamento2-exec.php',
@@ -267,7 +286,7 @@ $(function()
             cache: false,
             dataType: 'json',
 			beforeSend: function(){
-				 dialog = $.dialog({
+				 dialogs = $.dialog({
 						title: '<img src="../images/icon.ico" width="15" /> Sistema',
 						closeIcon: true,
 						content: 'Aguarde<img src="../images/loader19.gif"/> estou coletando os dados!',
@@ -356,7 +375,7 @@ $(function()
 				
 				$('#relaciona').append('<input type="hidden" name="arquivo" value="'+data[0].arquivo+'"/>');
 				$('#dyntable tbody').html(table);	
-					dialog.close();		
+					dialogs.close();		
 				}
             },
             error: function(jqXHR, textStatus, errorThrown)
@@ -386,7 +405,7 @@ $(function()
 				
 				case '210200':
 				
-					bootbox.confirm("<h2>CONFIRMACAÇÃO DA OPERAÇÃO</h2> confirmando a ocorrência da operação e o recebimento da mercadoria (para as operações com circulação de mercadoria).<br/> EX.: Você adiquiriu a mercadoria e ja recebeu a mesma em seu estabelecimento. Deseja confirmar esta manifestação?", function(result) {
+					bootbox.confirm("<h2>CONFIRMAÇÃO DA OPERAÇÃO</h2> confirmando a ocorrência da operação e o recebimento da mercadoria (para as operações com circulação de mercadoria).<br/> EX.: Você adiquiriu a mercadoria e ja recebeu a mesma em seu estabelecimento. Deseja confirmar esta manifestação?", function(result) {
 			
 						 if(result == true){
 								$("#file_upload2").focus();

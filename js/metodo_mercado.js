@@ -1,6 +1,7 @@
 ﻿// JavaScript Document
 var dlog;
 var boxlanca;
+var table;
 $(document).ready(function(){										
 	
     // Crio uma variável chamada $forms que pega o valor da tag form
@@ -760,21 +761,15 @@ function submeterformulario(elemento){
 				 $("tr[id='"+data.idpro+"'] > td[id='rel"+data.idpro+""+data.id+"']").html('<input type="hidden" name="item['+data.id+'][IDPROD_REL]" value="'+data.produto+'"/>'+data.produto+' - '+data.nomepro+'     <a href="#" class="separapencil" onClick="relacionarproduto(\''+data.idfor+'\',\''+data.idpro+'\','+data.id+',\''+data.idrel+'\',\'altrelacionar\',\''+data.ncabecaqtd+'\');"><i class="icon-pencil"></i></a>');				 
 				 dialog.close();
 				 dlog.close();
-				 
-				 $.confirm({
-					   title: '<img src="../images/icon.ico" width="15" /> Sistema',
-						content: '<img src="../images/checked.png"/><br/>Relacionado com sucesso!!',
-						autoClose: 'cancel|3000',
-						buttons: {							
-							cancel: function () {
-								var pos = $('#dyntable tbody tr[id="'+data.idpro+'"]').position().top;
-								$('html, body').animate({
-									scrollTop: pos											
-								}, 1000);
-								$('#dyntable tbody tr[id="'+data.idpro+'"]').animate({backgroundColor: '#3d9400'}, 'slow');
-							}
-						}
-				});
+				 /*
+				 var pos = $('#dyntable tbody tr[id="'+data.idpro+'"]').position().top;
+				 $('html, body').animate({
+					 scrollTop: pos											
+				 }, 1000);*/
+				 $('html, body').animate({
+					scrollTop: $('#dyntable tbody td:contains("' + data.idpro + '")').offset().top - 140
+				  }, 'slow');
+				 $('#dyntable tbody tr[id="'+data.idpro+'"]').animate({backgroundColor: '#3d9400','color':'#fff'}, 'slow');				 
 					
 			 },
              error: function(jqXHR, textStatus, errorThrown){
@@ -1688,6 +1683,23 @@ $(document).on("submit","#formpesquisanotas",function(e){
 	
 	var form = $(this);	
 	var data = form.serialize();
+	const filtros = form.serializeArray();
+    const datas   = {}; // cria o objeto
+	var   conta   = 0;
+    // cria o JSON
+    $(filtros).each(function(index, obj){
+		if(obj.value != '' && obj.name != 'act'){
+			datas[obj.name] = obj.value;
+			conta++;
+		}
+    });
+	
+	if(conta == 0){
+		var view = '<div class="message info">Selecione ao menos um campo para fazer o filtro</div>';								
+		$(".psq_form_callback").html(view);
+		$(".message").effect("bounce");	
+		return false;
+	}
 	
 	$.ajax({
 		url: '../php/relacionamento2-exec.php',
@@ -1806,7 +1818,9 @@ $(document).on('focus', '#cnpjemit',function(){
 	$(this).mask("99.999.999/9999-99");
 });
 
-
+$(document).on('blur','#numeroini',function(){
+	$("#numerofim").val($(this).val());
+});
 
 
 function VerificaNsuSefaz(){
@@ -1924,9 +1938,9 @@ function ListarNfes(nfe){
 			}else{
 				var dis = "disabled";
 			}
-			str += `<tr id="${nfe[i].cod}" class="${nfe[i].status}">
+			str += `<tr id="${nfe[i].cod}">
 					<td><label><input type="checkbox" class="checkboxnfes" value="${nfe[i].nfe_chave}|${nfe[i].nfe_numero}"/></label></td>
-					<td style="background: #fff !important;padding-top: 5px !important;">${nfe[i].icon}</td>
+					<td style="background: #fff !important;padding-top: 5px !important;"><div style="display:none;">${nfe[i].id_status}</div>${nfe[i].icon}</td>
 					<td>${nfe[i].nfe_numero}</td>
 					<td>${nfe[i].nfe_serie}</td>
 					<td>${nfe[i].nfe_empresa}</td>
@@ -1949,16 +1963,17 @@ function ListarNfes(nfe){
 	
 	var st = setInterval(function(){
 
-		$('.tbnfes').dataTable({					
+		table = $('.tbnfes').dataTable({					
 			"bSort" : true,
 			"paging":   false,
 			"ordering": false,
-			/*"info":     false,
-			"bDestroy": true,*/
+			/*"info":     false,*/			
+			"bDestroy": true,
 			"scrollY":  '50vh',
+			"scrollX": true,
 			"scrollCollapse": true,
 			"paging":         false,
-			"bFilter": false,
+			"bFilter": true,
 			"responsive": true,
 			"language": {
 				"search": "Pesquisar:"
@@ -1989,8 +2004,16 @@ function ListarNfes(nfe){
 				}
 			},
 	   });
-
+	  
+	   $($.fn.dataTable.tables(true))
+		.DataTable()
+		.columns.adjust();		
+		
+		$('.dataTables_scrollHeadInner').css( 'width', '100%' );
+		$('.tbnfes').css( 'width', '100%' );
+		$('.dataTables_filter').hide();
 		clearInterval(st);
+		//table.columns.adjust().draw();
 	},500);
 	
 	
@@ -2027,7 +2050,7 @@ $(document).on('click','.tpmanifest',function(){
 
 	});
 	if(contador > 0){
-		$.alert("<h4>Selecione somente as que não foi manifestado!</h4>");
+		$.alert("<h4>Selecione somente aquelas que não foram manifestados!</h4>");
 		return false;
 	}
 	
@@ -2039,7 +2062,7 @@ $(document).on('click','.tpmanifest',function(){
 			type: "post",
 			dataType: "json",
 			beforeSend: function (load) {
-				ajax_load("open");
+				ajax_load("open");				
 			},
 			success: function (su) {
 				ajax_load("close");				
@@ -2175,12 +2198,58 @@ $(document).on("click",'.btnlancamentonfe',function(){
 		$("input[name='rdntoas']").attr('checked',false);
 		$(".m-menu-notas li")[1].querySelectorAll('a')[0].click();
 		$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.add('selecionado');
-		//$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.toggle('selecionado', true);
+		$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.toggle('selecionado', true);
 		
 		$("#subimp").click();
-		boxlanca.close();
+		//if(boxlanca.close())
+		//boxlanca.close();
 		
 	}else{
-		$.alert("Somente pode lançar NF-e manifestado!");
+		$.alert("<h4>Para lançar a NF-e você deve primeiro efetuar a manifestação!</h4>");
 	}
+});
+
+$(document).ready(function(){
+
+	$(".checkbox-input").change(function(){		
+		if($(this).val() == 1){	
+		table.api()
+       		.columns(1)
+        	.search(this.value)
+        	.draw();
+		}else if($(this).val() == 2){
+			table.api()
+			.columns(1)
+			.search(this.value)
+			.draw();
+		}else if($(this).val() == 3){
+			
+			$.ajax({
+				url: '../php/relacionamento2-exec.php',
+				data: {act:'pesquisanotas',tipo:this.value},
+				type: "post",
+				dataType: "json",
+				beforeSend: function (load) {
+					//ajax_load("open");
+				},
+				success: function (su) {
+					//ajax_load("close");
+					
+					if (su.length > 0) {
+						ListarNfes(su);						
+					}
+		
+					
+				}
+			});
+			return false;
+				
+		}else{
+			table.api()
+			.columns(1)
+			.search('')
+			.draw();
+		}
+		
+	});
 });
