@@ -1,5 +1,6 @@
 ﻿// JavaScript Document
 var dlog;
+var boxlanca;
 $(document).ready(function(){										
 	
     // Crio uma variável chamada $forms que pega o valor da tag form
@@ -1918,7 +1919,11 @@ function ListarNfes(nfe){
 		<tbody>	`;
 
 		for(var i in nfe){
-			
+			if(nfe[i].status == 'success'){
+				var dis = "";
+			}else{
+				var dis = "disabled";
+			}
 			str += `<tr id="${nfe[i].cod}" class="${nfe[i].status}">
 					<td><label><input type="checkbox" class="checkboxnfes" value="${nfe[i].nfe_chave}|${nfe[i].nfe_numero}"/></label></td>
 					<td style="background: #fff !important;padding-top: 5px !important;">${nfe[i].icon}</td>
@@ -1930,7 +1935,7 @@ function ListarNfes(nfe){
 					<td>${nfe[i].nfe_dataemissao}</td>
 					<td>${nfe[i].nfe_totalnota}</td>
 					<td>${nfe[i].nfe_situacao}</td>
-					<td><a href="#" class="btn btn-primary btnlancamentonfe">Lançamento</a></td>					
+					<td><a href="#" class="btn btn-primary btnlancamentonfe" data-id="${nfe[i].nfe_chave}|${nfe[i].situacao_manifesto}" ${dis}>Lançar NF-e</a></td>					
 				</tr>`;
 		}
 
@@ -2002,19 +2007,30 @@ $(document).on('click','.tpmanifest',function(){
 	var codmanifest = $(this).attr('data-id');
 	var files = '';
 	var array = [];
-
+	var contador = 0;
 	jQuery(".checkboxnfes:checked").each(function(){
 		
 		files = this.value;		
 		var chave  = files.split('|')[0];
 		var numero = files.split('|')[1];
+		var tp = $(this).parents('tr').attr('class').split(' ')[0].trim();
+		
 		array.push({
 			'chave':chave,
 			'numero':numero,
 			'codmanifest':codmanifest
 		});
-	});
 
+		if(tp == 'success'){
+			contador++;
+		}
+
+	});
+	if(contador > 0){
+		$.alert("<h4>Selecione somente as que não foi manifestado!</h4>");
+		return false;
+	}
+	
 	if(array != ''){
 		
 		$.ajax({
@@ -2023,30 +2039,81 @@ $(document).on('click','.tpmanifest',function(){
 			type: "post",
 			dataType: "json",
 			beforeSend: function (load) {
-				//ajax_load("open");
+				ajax_load("open");
 			},
 			success: function (su) {
-				//ajax_load("close");				
+				ajax_load("close");				
 				//console.log(su);
 				//console.log(su[0].arr.retEvento.infEvento);
-				console.log(su[0].arr.retEvento.length);
+				//console.log(su[0].arr.retEvento.length);
 				var res = '<h3>Resposta:</h3>';
-				if(su[0].arr.retEvento.length > 0){
-					for(i =0; i <su[0].arr.retEvento.length; i++){
-						var event = su[0].arr.retEvento[i].infEvento;
+				if(su[0].arr.retEvento.length != undefined){
+					if(su[0].arr.retEvento.length > 0){
+						for(i =0; i <su[0].arr.retEvento.length; i++){
+							var event = su[0].arr.retEvento[i].infEvento;
+							
+							if(event.cStat == '999'){
+								res += `<div class="listresp">						
+									Sefaz esta temporariamente fora do ar tente novamente daqui alguns minutos, obrigado!
+								</div>	`;	
+							}else{
+
+								res += `
+								<div class="listresp">																
+                               		<div class="listresp-top">
+										<i class="far fa-check-circle fa-4x"></i>
+										<h4>
+											<strong>Número Nota</strong>:${su[0].res[i].numero}
+											<p>${event.xMotivo}</p>
+										</h4>                                    
+										<button type="button" class="btn btn-tab" data-id="tab${su[0].res[i].numero}"><i class="fas fa-chevron-down"></i></button>                                    
+									</div>					
+									<div class="listresp-header" style="display:none;" id="tab${su[0].res[i].numero}">
+										<div>Motivo: ${event.xMotivo}</div>
+										<div>Evento: ${event.xEvento}</div>
+										<div>Chave de acesso: ${event.chNFe}</div>
+										<div>Data do evento: ${event.dhRegEvento}</div>
+										<div>Número do protocolo: ${event.nProt}</div>
+									</div>	
+								</div>							
+								`;
+								getNfesColetados();	
+							}	
+						}
+					}
+				}else{
+					var event = su[0].arr.retEvento.infEvento;								
+					if(event.cStat == '999'){
+						res += `<div class="listresp">						
+							Sefaz esta temporariamente fora do ar tente novamente daqui alguns minutos, obrigado!
+						</div>	`;	
+					}else{
+						console.log(su[0].res);
 						res += `
-						<div class="listresp">						
-								Motivo: ${event.xMotivo}<br/>
-								Evento: ${event.xEvento}<br/>
-								Chave de acesso: ${event.chNFe}<br/>
-								Data do evento: ${event.dhRegEvento}<br/>
-								Número do protocolo: ${event.nProt}<br/>
-						</div>							
-						`;		
+								<div class="listresp">																
+                               		<div class="listresp-top">
+										<i class="far fa-check-circle fa-4x"></i>
+										<h4>
+											<strong>Número Nota:</strong>${su[0].res[0].numero}
+											<p>${event.xMotivo}</p>
+										</h4>                                    
+										<button type="button" class="btn btn-tab" data-id="tab${su[0].res[0].numero}"><i class="fas fa-chevron-down"></i></button>                                    
+									</div>					
+									<div class="listresp-header" style="display:none;" id="tab${su[0].res[0].numero}">
+										<div>Motivo: ${event.xMotivo}</div>
+										<div>Evento: ${event.xEvento}</div>
+										<div>Chave de acesso: ${event.chNFe}</div>
+										<div>Data do evento: ${event.dhRegEvento}</div>
+										<div>Número do protocolo: ${event.nProt}</div>
+										<a href="#" class="btn btn-primary btnlancamentonfe" data-id="${event.chNFe}|${event.tpEvento} ${event.xEvento}">Lançar NF-e</a>
+									</div>	
+								</div>							
+								`;	
+						getNfesColetados();
 					}
 				}
 
-				$.confirm({
+				boxlanca = $.confirm({
 					title: 'Mensagem Sefaz',
 					content: ''+res+'',
 					type: 'green',
@@ -2057,7 +2124,7 @@ $(document).on('click','.tpmanifest',function(){
 							text: 'Fechar',
 							btnClass: 'btn-red',
 							action: function(){
-								
+								boxlanca.close();
 							}
 						},
 						
@@ -2082,9 +2149,38 @@ $(document).on('click','.tpmanifest',function(){
 
 
 	}else{
-		$.alert('Selecione uma NF-e para se manifestar!');
+		$.alert('Selecione uma NF-e para fazer a manifestação!');
 	}
 
 
 
+});
+
+$(document).on("click",'.btn-tab',function(){
+	var id = $(this).attr('data-id');
+	$("#"+id).slideToggle();
+});
+
+$(document).on("click",'.btnlancamentonfe',function(){
+	var chave = $(this).attr('data-id').split('|')[0].trim();
+	var mani  = $(this).attr('data-id').split('|')[1].split(' ')[0].trim();
+	
+	if($(this).attr('disabled') == undefined){	
+		$("#por_arquivo").hide();
+		$("#por_nsu").hide();
+		$("#por_barras").show();
+		$("select[name='manif'] option[value='"+mani+"']").attr("selected","selected");
+		document.getElementById('file_upload2').value = chave;	
+		$(".m-menu-notas li a").removeClass('selecionado');
+		$("input[name='rdntoas']").attr('checked',false);
+		$(".m-menu-notas li")[1].querySelectorAll('a')[0].click();
+		$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.add('selecionado');
+		//$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.toggle('selecionado', true);
+		
+		$("#subimp").click();
+		boxlanca.close();
+		
+	}else{
+		$.alert("Somente pode lançar NF-e manifestado!");
+	}
 });

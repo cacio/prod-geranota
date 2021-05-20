@@ -143,44 +143,48 @@
                     
                         <legend>
                             Entrada via Base SEFAZ (NSU)						
-                            <div class="span5 pull-right">
-                                <fieldset class="fieldset">
-                                    <h3>Legenda</h3> 
-                                    <i class="fa fa-info-circle text-info"></i> NF-e Sem manifestação
-                                    <i class="fa fa-check-circle text-success"></i>NF-e Manifestado<br><br>
-                                </fieldset>
-                            </div>
+                           
                         </legend>
-                        <ul class="menuadm">
-                            <li>
-                                <a href="#" class="btnfilternfe"><i class="fa fa-filter fa-3x"></i>Filtro Avançado</a>
-                            </li>
-                            <li>
-                                <a href="#" class="btnnovasnfes"><i class="fa fa-search-plus fa-3x"></i>Pesquisa novas NF-e</a>
-                            </li>
-
-                            <li>
+                        <ul class="m-menu-notas2">
+                            <fieldset class="fieldset2">
+                                <h3>Pesquisa</h3> 
+                                <li>
+                                    <a href="#" class="btnfilternfe"><i class="fa fa-filter fa-3x"></i>Filtro Avançado</a>
+                                </li>
+                                <li>
+                                    <a href="#" class="btnnovasnfes"><i class="fa fa-search-plus fa-3x"></i>Pesquisa novas NF-e</a>
+                                </li>
+                        </fieldset>
+                            <!--<li>
                                 <a href="#" id="tpmanifest"><i class="fa fa-outdent fa-3x"></i>Tipo de Manifestação</a>
-                            </li>
+                            </li>-->
+                            <fieldset class="fieldset2">
+                                <h3>Tipo de Manifestação</h3> 
+                                <li>
+                                    <a href="#" class="tpmanifest" data-id="210210"><i class="fa fa-chalkboard-teacher fa-3x"></i>Ciência da Operação</a>
+                                </li> 
+                                <li>
+                                    <a href="#" class="tpmanifest" data-id="210200"><i class="fa fa-check-double fa-3x"></i>Confirmação da Operação</a>
+                                </li>
 
-                            <li>
-                                <a href="#" class="tpmanifest" data-id="210200" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Confirmação da Operação</a>
-                            </li>
 
-                            <li>
-                                <a href="#" class="tpmanifest" data-id="210210" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Ciência da Operação</a>
-                            </li>
+                                <li>
+                                    <a href="#" class="tpmanifest" data-id="210220"><i class="fa fa-comment-slash fa-3x"></i>Desconhecimento</a>
+                                </li>
 
-                            <li>
-                                <a href="#" class="tpmanifest" data-id="210220" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Desconhecime<br>nto da Operação</a>
-                            </li>
-
-                            <li>
-                                <a href="#" class="tpmanifest" data-id="210240" style="display:none !important;"><i class="fa fa-th fa-3x"></i>Operação não Realizada</a>
-                            </li>
-
+                                <li>
+                                    <a href="#" class="tpmanifest" data-id="210240"><i class="fa fa-ban fa-3x"></i>Operação não Realizada</a>
+                                </li>
+                            </fieldset>
+                            <fieldset class="fieldset">
+                                <h3>Legenda</h3> 
+                                <i class="fa fa-info-circle text-info"></i> NF-e Sem manifestação
+                                <i class="fa fa-check-circle text-success"></i>NF-e Manifestado<br><br>
+                            </fieldset>
                         </ul>
-                        
+                       
+                           
+                       
                         <div class="msgnsu"></div>
                         
                         <div class="text-center" id="carregando"></div>

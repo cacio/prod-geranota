@@ -1218,6 +1218,9 @@ separator
   height: 36px;
   padding: 5px;
   top: -8px;
+  float: right;
+  margin-top: 1px;
+  line-height: 3;
 }
 
 .fieldset h3{
@@ -1229,4 +1232,80 @@ separator
   background: #fff;
   padding: 0px 3px;
 
+}
+
+.fieldset2{
+  position: relative;
+  border: 1px solid #ddd;  
+  padding: 10px;
+  top: -8px;
+  display: inline-block;
+}
+
+.fieldset2 h3{
+  position: absolute;
+  top: 0;
+  font-size: 18px;
+  line-height: 1;
+  margin: -6px 0 0;
+  background: #fff;
+  font-weight: bold;
+  font-size: 12px;
+
+}
+
+
+.m-menu-notas2{
+  width: 100%;
+  margin: 0;
+  padding: 0;  
+}
+.m-menu-notas2 li{
+  list-style-type: none;
+    display: inline-flex;
+}
+
+.m-menu-notas2 li a{
+  width: 110px;
+  height: 110px;
+  border-radius: 8px;
+  background: rgb(199,198,210);
+  background: linear-gradient(0deg, rgba(199,198,210,1) 0%, rgba(199,198,210,1) 35%, rgba(222,223,223,1) 100%);
+  margin: 1px;
+  margin-bottom: 9px;
+  color: #000000;
+  text-decoration: none;
+  text-align: center;
+  font-weight: bold; 
+  padding: 5px;
+}
+.m-menu-notas2 li a label{
+  width: 110px;
+  height: 110px;
+  text-align: center;
+  font-weight: bold; 
+}
+
+.m-menu-notas2 li a label img{
+  align-items: center;
+    width: 61%;
+}
+
+.m-menu-notas2 li a label input{
+  /*width: 110px;
+  height: 110px;*/
+  position: absolute;
+  z-index: -1;
+  opacity: 0;
+}
+
+
+.m-menu-notas2 li a label:focus{
+  background: rgb(184, 184, 190);
+  background: linear-gradient(0deg, rgb(134, 134, 138) 0%, rgb(173, 172, 177) 35%, rgb(174, 182, 182) 100%);
+}
+
+.m-menu-notas2 li a i{
+  display: block;
+  margin-top: 16px;
 }
