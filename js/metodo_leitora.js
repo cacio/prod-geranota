@@ -120,15 +120,19 @@ $(document).ready(function(e) {
 								btnClass: 'btn-green',
 								action: function(){
 									$('#cfopsn').val(1);
-									$("#dtentrada").focus();
+									if($("#dtentrada").val() == ''){
+										$("#dtentrada").focus();
+									}
 								}
 							},
 							nao: {
 								text: 'Não',
 								btnClass: 'btn-red',
-								action: function(){
+								action: function(){									
 									$('#cfopsn').val(2);
-									$("#dtentrada").focus();
+									if($("#dtentrada").val() == ''){
+										$("#dtentrada").focus();
+									}
 								}
 							}
 						}
@@ -143,6 +147,9 @@ $(document).ready(function(e) {
 			}
 						
 		});
+		}else{
+			$(this).focus();
+			$(this).addClass('inputerr');
 		}
 		if($(this).val() > 5000){
 			//alert('CFOP MAIOR QUE O PLANEJADO');	
@@ -312,7 +319,7 @@ $(function()
 				$("#nota_dtemi").html(data[0].dtemis);
 				//$("#cfop").val(data[0].cfop);
 				$("#cfop").val();
-				$("#cfop").focus();
+				$("#dtentrada").focus();
 				$("#dtentrada").val(data[0].dtentrada);				
 				$("#for_nome").html(data[0].cod+'-'+data[0].nome);
 				$("#for_endereco").html(data[0].ende);
@@ -394,7 +401,16 @@ $(function()
             }
 		});
 	}
-	
+	$("#dtentrada").focus(function() {
+		var scrollTop     = $(window).scrollTop(),
+		   elementOffset = $(this).offset().top,
+		   distance      = (elementOffset - scrollTop);
+	   
+		$('html, body').animate({
+		scrollTop: $(this).offset().top
+		}, distance);
+   
+	 });
 	
 	$(document).ready(function(e) {
         

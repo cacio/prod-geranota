@@ -911,7 +911,10 @@ jQuery(function() {
 			    'Out','Nov','Dez'
 			    ],
 			    nextText: 'Próximo',
-			    prevText: 'Anterior'
+			    prevText: 'Anterior',
+				onSelect: function() {
+					$("#cfop").focus();
+				}
 			    });	
 			 
 

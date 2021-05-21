@@ -1439,3 +1439,8 @@ separator
   font-size: 12px;
   line-height: 17px;
 }
+
+.inputerr {
+  border: 1px solid red !important;
+  outline: none;
+}

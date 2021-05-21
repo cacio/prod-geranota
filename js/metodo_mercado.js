@@ -85,7 +85,7 @@ $(document).ready(function(){
 	             logd.close();
 				
 			if(data[0].cd == '1'){ 				
-				 alert(data[0].msg);
+				 //alert(data[0].msg);
 				
 				var dtemi 	   = $("#dt_emissao").html();
 				var cfor  	   = $("#cfor").val();
@@ -225,20 +225,36 @@ function mostrarduplics(arquivo,array){
 									success: function(data){
 										
 										if(data[0].tipo == 'ok'){
-											alert(data[0].msg);
+											//alert(data[0].msg);
+
+											$.confirm({
+												title: 'Inserido com sucesso!',
+												content: ''+data[0].msg+'<br><img src="../images/59362-sucess-page.gif" style="width: 208px;margin: auto 0px 0px 73px;" />',
+												type: 'green',
+												typeAnimated: true,
+												buttons: {
+													VAMOS: {
+														text: 'Vamos para próxima',
+														btnClass: 'btn-green',
+														action: function(){
+															$("#nota_dados").hide();
+															$("#for_dados").hide();
+															$("#total_dados").hide();
+															$("#btnaction").hide();
+															$("#subimp").attr('disabled',true);
+															$("#msg").hide();
+															$("#cfop").val('');
+															$("#file_upload2").val('');
+															$("#file_upload2").focus();
+															bootbox.hideAll(); 
+															$('#apropria').modal('hide');
+															window.location.href = '../php/importacao.php';
+														}
+													}
+												}
+											});
 											 
-											$("#nota_dados").hide();
-											$("#for_dados").hide();
-											$("#total_dados").hide();
-											$("#btnaction").hide();
-											$("#subimp").attr('disabled',true);
-											$("#msg").hide();
-											$("#cfop").val('');
-											$("#file_upload2").val('');
-											$("#file_upload2").focus();
-											 bootbox.hideAll(); 
-											$('#apropria').modal('hide');
-											window.location.href = '../php/importacao.php';
+											
 											cf.close();
 										}else if(data[0].tipo == 'not'){
 											alert(data[0].msg);
@@ -264,19 +280,34 @@ function mostrarduplics(arquivo,array){
 								//aqui vai inserir as duplicatas
 								inserirduplicatas(array);	
 							}else{
-								alert(data[0].msg);
-								$("#nota_dados").hide();
-								$("#for_dados").hide();
-								$("#total_dados").hide();
-								$("#btnaction").hide();
-								$("#subimp").attr('disabled',true);
-								$("#msg").hide();
-								$("#cfop").val('');
-								$("#file_upload2").val('');
-								$("#file_upload2").focus();
-								 bootbox.hideAll(); 
-								$('#apropria').modal('hide');
-								window.location.href = '../php/importacao.php';
+								$.confirm({
+									title: 'Inserido com sucesso!',
+									content: ''+data[0].msg+'<br><img src="../images/59362-sucess-page.gif" style="width: 208px;margin: auto 0px 0px 73px;" />',
+									type: 'green',
+									typeAnimated: true,
+									buttons: {
+										VAMOS: {
+											text: 'Vamos para próxima',
+											btnClass: 'btn-green',
+											action: function(){
+												$("#nota_dados").hide();
+												$("#for_dados").hide();
+												$("#total_dados").hide();
+												$("#btnaction").hide();
+												$("#subimp").attr('disabled',true);
+												$("#msg").hide();
+												$("#cfop").val('');
+												$("#file_upload2").val('');
+												$("#file_upload2").focus();
+												bootbox.hideAll(); 
+												$('#apropria').modal('hide');
+												window.location.href = '../php/importacao.php';
+											}
+										}
+									}
+								});
+								
+								
 							}	
 								
 						}); 
@@ -495,8 +526,19 @@ function relacionarproduto(idfor,ifpro,i,idrel,act,npc){
 		var nomcfop   = "";
 		var NPEC_CX	  = npc == undefined ? 0 : npc;	
 		var vator     = 2;
-	
+
+		if($("#dtentrada").val() == ''){
+			$("#dtentrada").focus();
+			$("#dtentrada").addClass('inputerr');
+			return false;
+		}
 		
+		if($("#cfop").val() == ''){
+			$("#cfop").focus();
+			$("#cfop").addClass('inputerr');
+			return false;
+		}
+
 		if(idrel != ""){
 			
 			var data = ListaAlteracaoRelacionamento(idrel);
@@ -822,19 +864,34 @@ function formularioduplic(elemento){
 				if(data[0].tipo == 'ok'){					
 				alert("Duplicata inserido(a) com sucesso!");
 				if(valor == 0){
-					alert(data[0].msg);
-					$("#nota_dados").hide();
-					$("#for_dados").hide();
-					$("#total_dados").hide();
-					$("#btnaction").hide();
-					$("#subimp").attr('disabled',true);
-					$("#msg").hide();
-					$("#cfop").val('');
-					$("#file_upload2").val('');
-					$("#file_upload2").focus();
-					 bootbox.hideAll(); 
-					$('#apropria').modal('hide');
-					window.location.href = '../php/importacao.php';				
+
+					$.confirm({
+						title: 'Duplicata inserido(a) com sucesso!',
+						content: ''+data[0].msg+'<br><img src="../images/59362-sucess-page.gif" style="width: 208px;margin: auto 0px 0px 73px;" />',
+						type: 'green',
+						typeAnimated: true,
+						buttons: {
+							VAMOS: {
+								text: 'Vamos para próxima',
+								btnClass: 'btn-green',
+								action: function(){
+									$("#nota_dados").hide();
+									$("#for_dados").hide();
+									$("#total_dados").hide();
+									$("#btnaction").hide();
+									$("#subimp").attr('disabled',true);
+									$("#msg").hide();
+									$("#cfop").val('');
+									$("#file_upload2").val('');
+									$("#file_upload2").focus();
+									bootbox.hideAll(); 
+									$('#apropria').modal('hide');
+									window.location.href = '../php/importacao.php';	
+								}
+							}
+						}
+					});
+													
 				}
 				
 				if(parseFloat($("#vDup").val()) != parseFloat($("#valor_tot").html())){
@@ -849,20 +906,34 @@ function formularioduplic(elemento){
 					
 						
 				}else{
-					
-					alert(data[0].msg);
-					$("#nota_dados").hide();
-					$("#for_dados").hide();
-					$("#total_dados").hide();
-					$("#btnaction").hide();
-					$("#subimp").attr('disabled',true);
-					$("#msg").hide();
-					$("#cfop").val('');
-					$("#file_upload2").val('');
-					$("#file_upload2").focus();
-					 bootbox.hideAll(); 
-					$('#apropria').modal('hide');
-					window.location.href = '../php/importacao.php';
+										
+					$.confirm({
+						title: 'Duplicata inserido(a) com sucesso!',
+						content: ''+data[0].msg+'<br><img src="../images/59362-sucess-page.gif" style="width: 208px;margin: auto 0px 0px 73px;" />',
+						type: 'green',
+						typeAnimated: true,
+						buttons: {
+							VAMOS: {
+								text: 'Vamos para próxima',
+								btnClass: 'btn-green',
+								action: function(){
+									$("#nota_dados").hide();
+									$("#for_dados").hide();
+									$("#total_dados").hide();
+									$("#btnaction").hide();
+									$("#subimp").attr('disabled',true);
+									$("#msg").hide();
+									$("#cfop").val('');
+									$("#file_upload2").val('');
+									$("#file_upload2").focus();
+									bootbox.hideAll(); 
+									$('#apropria').modal('hide');
+									window.location.href = '../php/importacao.php';
+								}
+							}
+						}
+					});
+
 				}				
 						
 				}else if(data[0].tipo == 'not'){
@@ -2200,7 +2271,7 @@ $(document).on("click",'.btnlancamentonfe',function(){
 		$(".m-menu-notas li")[1].querySelectorAll('a')[0].click();
 		$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.add('selecionado');
 		$(".m-menu-notas li")[1].querySelectorAll('a')[0].classList.toggle('selecionado', true);
-		
+				  
 		$("#subimp").click();
 		//if(boxlanca.close())
 		//boxlanca.close();
