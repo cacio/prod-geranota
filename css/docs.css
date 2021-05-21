@@ -1215,12 +1215,13 @@ separator
 .fieldset{
   position: relative;
   border: 1px solid #ddd;
-  height: 36px;
+  height: 29px;
   padding: 5px;
-  top: -8px;
+  top: -10px;
   float: right;
   margin-top: 1px;
   line-height: 3;
+  width: 322px;
 }
 
 .fieldset h3{
@@ -1314,14 +1315,26 @@ separator
   display: inline-flex;
   flex-wrap: wrap;
   justify-content: center;
-  /*width: 90%;*/
   margin-left: auto;
   margin-right: auto;
   float: right;
-  /*max-width: 600px;*/
   position: relative;
   top: -123px;
+  border: 1px solid #ddd;
+  padding: 1px;
+
 }
+.checkbox-group h3{
+  position: absolute;
+  top: -1px;  
+  line-height: 1;
+  margin: -6px 0 0;
+  background: #fff;
+  font-weight: bold;
+  font-size: 12px;
+  left: 10px;
+}
+
 .checkbox-group > * {
   margin: 0.5rem 0.2rem;
 }

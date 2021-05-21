@@ -152,28 +152,28 @@
                                     <a href="#" class="btnfilternfe"><i class="fa fa-filter fa-3x"></i>Filtro Avançado</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="btnnovasnfes"><i class="fa fa-search-plus fa-3x"></i>Pesquisa novas NF-e</a>
+                                    <a href="#" class="btnnovasnfes"><i class="fa fa-search-plus fa-3x" style="color: #184a99;"></i>Pesquisa novas NF-e</a>
                                 </li>
-                        </fieldset>
+                            </fieldset>
                             <!--<li>
                                 <a href="#" id="tpmanifest"><i class="fa fa-outdent fa-3x"></i>Tipo de Manifestação</a>
                             </li>-->
                             <fieldset class="fieldset2">
                                 <h3>Tipo de Manifestação</h3> 
                                 <li>
-                                    <a href="#" class="tpmanifest" data-id="210210"><i class="fa fa-chalkboard-teacher fa-3x"></i>Ciência da Operação</a>
+                                    <a href="#" class="tpmanifest" data-id="210210"><i class="fa fa-chalkboard-teacher fa-3x" style="color: #4d90fe;"></i>Ciência da Operação</a>
                                 </li> 
                                 <li>
-                                    <a href="#" class="tpmanifest" data-id="210200"><i class="fa fa-check-double fa-3x"></i>Confirmação da Operação</a>
+                                    <a href="#" class="tpmanifest" data-id="210200"><i class="fa fa-check-double fa-3x text-success"></i>Confirmação da Operação</a>
                                 </li>
 
 
                                 <li>
-                                    <a href="#" class="tpmanifest" data-id="210220"><i class="fa fa-comment-slash fa-3x"></i>Desconhecimento</a>
+                                    <a href="#" class="tpmanifest" data-id="210220"><i class="fa fa-comment-slash fa-3x" style="color: #dbcf10d6;"></i>Desconhecimento</a>
                                 </li>
 
                                 <li>
-                                    <a href="#" class="tpmanifest" data-id="210240"><i class="fa fa-ban fa-3x"></i>Operação não Realizada</a>
+                                    <a href="#" class="tpmanifest" data-id="210240"><i class="fa fa-ban fa-3x" style="color: #dd4b39;"></i>Operação não Realizada</a>
                                 </li>
                             </fieldset>
                             <fieldset class="fieldset">
@@ -182,12 +182,13 @@
                                 <i class="fa fa-check-circle text-success"></i>NF-e Manifestado<br><br>                                
                             </fieldset>
                             <fieldset class="checkbox-group">	
+                                <h3>Filtrar</h3>
                                 <div class="checkbox">
                                     <label class="checkbox-wrapper">
-                                        <input type="checkbox" class="checkbox-input" value="1"/>
+                                        <input type="radio" class="checkbox-input" name="checkbox-input" id="checkbox-input1" value="1"/>
                                         <span class="checkbox-tile">
                                             <span class="checkbox-icon">
-                                                <i class="fa fa-info-circle fa-2x"></i>
+                                                <i class="fa fa-info-circle text-info fa-2x"></i>
                                             </span>
                                             <span class="checkbox-label">Sem <br> Manifestação<span>
                                         </span>
@@ -195,10 +196,10 @@
                                 </div>
                                 <div class="checkbox">
                                     <label class="checkbox-wrapper">
-                                        <input type="checkbox" class="checkbox-input" value="2" />
+                                        <input type="radio" class="checkbox-input" name="checkbox-input" id="checkbox-input2" value="2" />
                                         <span class="checkbox-tile">
                                             <span class="checkbox-icon">
-                                                <i class="fa fa-check-circle fa-2x"></i>
+                                                <i class="fa fa-check-circle fa-2x text-success"></i>
                                             </span>
                                             <span class="checkbox-label">Com Manifestação</span>
                                         </span>
@@ -206,10 +207,10 @@
                                 </div>
                                 <div class="checkbox">
                                     <label class="checkbox-wrapper">
-                                        <input type="checkbox" class="checkbox-input" value="3"/>
+                                        <input type="radio" class="checkbox-input" name="checkbox-input" id="checkbox-input3" value="3"/>
                                         <span class="checkbox-tile">
                                             <span class="checkbox-icon">
-                                                <i class="fas fa-database fa-2x"></i>
+                                                <i class="fas fa-database fa-2x" style="color: blueviolet;"></i>
                                             </span>
                                             <span class="checkbox-label">Notas Não importadas</span>
                                         </span>
@@ -223,9 +224,7 @@
                         <div class="msgnsu"></div>
                         
                         <div class="text-center" id="carregando"></div>
-                        <div class="tabnfes" style="width: 100%;">
-    
-                        </div>
+                        <div class="tabnfes" style="width: 100%;"></div>
                     
                  </section>
 

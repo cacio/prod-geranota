@@ -2011,6 +2011,7 @@ function ListarNfes(nfe){
 		
 		$('.dataTables_scrollHeadInner').css( 'width', '100%' );
 		$('.tbnfes').css( 'width', '100%' );
+		$('#DataTables_Table_0_wrapper').css( 'top', '-104px' );
 		$('.dataTables_filter').hide();
 		clearInterval(st);
 		//table.columns.adjust().draw();
