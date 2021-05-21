@@ -2274,7 +2274,7 @@ $(document).on("click",'.btnlancamentonfe',function(){
 				  
 		$("#subimp").click();
 		//if(boxlanca.close())
-		//boxlanca.close();
+		boxlanca.close();
 		
 	}else{
 		$.alert("<h4>Para lançar a NF-e você deve primeiro efetuar a manifestação!</h4>");

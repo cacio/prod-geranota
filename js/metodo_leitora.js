@@ -1,4 +1,8 @@
 ﻿// JavaScript Document
+var count  = 60;
+var count2 = 0;
+var tempo = document.getElementById("tempo");
+var txttempo = document.getElementById("txttempo");
 
 $(document).ready(function(e) {
     
@@ -164,7 +168,7 @@ $(document).ready(function(e) {
 
 $(function()
 {
-    
+	    
 	$("#subimp").attr('disabled',true);
 	
 	$("#subimp").click(function(){
@@ -194,24 +198,37 @@ $(function()
 			beforeSend:function(){
 									
 				ajax_load("open");
-				$('.ajax_load_box_title').html('Aguarde<img src="../images/loader19.gif"/> Fazendo Comunicação com a SEFAZ!');
+				//$(".ajax_load_box_circle").show();
+				$(".ajax_load_box_circle").hide();
+				$(".ajax_load_box_circle2").html('<lottie-player src="https://assets3.lottiefiles.com/packages/lf20_9j44XV.json"  background="transparent"  speed="1"  style="height: 500px;"  loop autoplay></lottie-player>');
+				$('.ajax_load_box_title').html('Aguarde Fazendo Comunicação com a SEFAZ!');
+				//$(".ajax_load_box_circle2").html('');
+				$('.btn-closetime').addClass('hide');
+
+				tempo.innerText = "";	
 			},
             success: function(data, textStatus, jqXHR)
             {
 				
 				ajax_load("close");
 				$('.ajax_load_box_title').html('Aguarde, carregando...');
+				$(".ajax_load_box_circle2").html('');
+				$(".ajax_load_box_circle").show();
+				
 				//$('.jconfirm-closeIcon').click();
             	if(typeof data.error === 'undefined')
             	{
             		// Sucesso até chamar a função para processar o formulário
             		var file = data.files;
-					
+					count2 = 0;
+					$('.btn-closetime').addClass('hide');
 					//console.log('sucesso: ' + data.files);
 					//$('#msg').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>Ok Tudo certo!</div>');
 					var view = '<div class="message success">Ok Tudo certo!</div>';
 					$(".barra_form_callback").html(view);
 					$(".message").effect("bounce");
+
+					tempo.innerText  = "";					
 
 					submitForm2(data);
 					$("#subimp").focus();
@@ -222,9 +239,59 @@ $(function()
 					var view = '<div class="message error">' + data.error+' </div>';
 					$(".barra_form_callback").html(view);
 					$(".message").effect("bounce");
-            		//console.log('ERRORS: ' + data.error);
-					//$('#msg').html('<div class="alert alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button><h4>Aviso!</h4>'+data.error+'</div>')
-					$("#subimp").focus();
+            		
+					var caminho = data.error.search('Documento já manifestado');
+					if(caminho > 0){
+						$('#tempo').css({
+							'font-size':"30px",
+							'line-height':"59px",
+						});	
+						$(".ajax_load_box_circle").hide();
+						$(".ajax_load_box_circle2").html('<lottie-player src="https://assets3.lottiefiles.com/packages/lf20_9j44XV.json"  background="transparent"  speed="1"  style="height: 500px;"  loop autoplay></lottie-player>');
+						if(count2 == 0){
+							ajax_load("open");
+							$('.ajax_load_box_title').css({
+								'font-size':"30px"
+							});							
+							$('.ajax_load_box_title').html('primeira');
+							$('.btn-closetime').removeClass('hide');
+						}else if(count2 > 0){
+
+							if(count2 == 4){																
+								ajax_load("open");
+								$('.ajax_load_box_title').css({
+									'font-size':"30px"
+								});
+								$('.btn-closetime').removeClass('hide');
+								$(".ajax_load_box_circle2").html('<lottie-player src="https://assets9.lottiefiles.com/packages/lf20_LlRvIg.json"  background="transparent"  speed="1"  style="height: 500px;"  loop autoplay></lottie-player>');
+								$('.ajax_load_box_title').html('Infelizmente não obtivemos <br> retorno da SEFAZ.<br> tente novamente mais tarde!');
+								timer.stop();
+								tempo.innerText = "";						
+								return false;
+							}
+
+							if(count2 == 3){
+								ajax_load("open");
+								$('.ajax_load_box_title').css({
+									'font-size':"30px"
+								});
+								$('.btn-closetime').removeClass('hide');
+								$('.ajax_load_box_title').html('terceira');
+							}else{
+								ajax_load("open");	
+								$('.ajax_load_box_title').css({
+									'font-size':"30px"
+								});							
+								$('.ajax_load_box_title').html('segunda');
+								$('.btn-closetime').removeClass('hide');
+							}
+							
+							
+						}
+						start();
+					}	
+
+					//$("#subimp").focus();
 					
             	}
             },
@@ -281,6 +348,38 @@ $(function()
 	
 });
 
+$(document).on('click','.btn-closetime',function(){
+	$(".ajax_load_box_circle").show();
+	$('.ajax_load_box_title').html('Aguarde<img src="../images/loader19.gif"/> Fazendo Comunicação com a SEFAZ!');
+	$(".ajax_load_box_circle2").html('');
+	$('.btn-closetime').addClass('hide');
+	timer.stop();
+	tempo.innerText = "";
+});
+function start(){
+
+	//var display = document.querySelector('#time'),
+	timer = new CountDownTimer(count);
+
+	timer.onTick(format).onTick(restart).start();
+
+	function restart() {
+		if (this.expired())
+		 {
+			
+			count2++;
+			$("#subimp").click();
+			//setTimeout(function() { timer.start(); }, 1000);
+		}
+	}
+
+	function format(minutes, seconds) {
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		tempo.textContent = minutes + ':' + seconds;
+	}
+
+}
  function submitForm2(data2)
 	{
 		//data.files

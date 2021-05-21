@@ -75,7 +75,8 @@
     $minJS->add(dirname(__DIR__,1)."/js/metodo_leitora.js");
     $minJS->add(dirname(__DIR__,1)."/js/editetable.js");
     $minJS->add(dirname(__DIR__,1)."/js/sortable.js");
-
+    $minJS->add(dirname(__DIR__,1)."/js/countdowntimer.js");
+    
     $minJS->minify(dirname(__DIR__,1)."/scripts.min.js");
 
 ?>

@@ -20,7 +20,12 @@
     <div class="ajax_load">
       <div class="ajax_load_box">
           <div class="ajax_load_box_circle"></div>
-          <div class="ajax_load_box_title">Aguarde, carregando...</div>
+          <div class="ajax_load_box_circle2"></div>
+          <div class="ajax_load_box_title">                        
+            Aguarde, carregando...
+          </div>
+          <div id="tempo"></div>
+          <button type="button" class="btn btn-danger btn-closetime hide">Fechar</button>          
       </div>
   </div>
     <!-- Part 1: Wrap all page content here -->
@@ -102,7 +107,8 @@
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
    
-    <script src="{js}"></script>    
+    <script src="{js}"></script> 
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>   
     <script type="text/javascript">
       // Este evendo é acionado após o carregamento da página
       jQuery(window).load(function() {
