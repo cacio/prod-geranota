@@ -337,6 +337,14 @@ $(function()
 	// Pegue os arquivos e colocá-las à nossa variável
 	function prepareUpload(event)
 	{
+		var manif = $('select[name="manif"] option:selected').val();
+
+		if(manif == ''){
+			alert('Selecione um tipo de manifestação!');
+			$('input[type=file]').val('');
+			return false;
+		}
+
 		files = event.target.files;
 	}
 
@@ -354,7 +362,15 @@ $(function()
 		{
 			data.append(key, value);
 		});
-        
+		var manif = $('select[name="manif"] option:selected').val();
+
+		if(manif == ''){
+			alert('Selecione um tipo de manifestação!');
+			return false;
+		}
+
+        data.append('manif',manif);
+
         $.ajax({
             url: '../php/relacionamento-exec.php?act=box&files',
             type: 'POST',

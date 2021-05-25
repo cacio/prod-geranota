@@ -1,5 +1,7 @@
 <?php
-
+	use NFePHP\NFe\Tools;
+	use NFePHP\Common\Certificate;
+	use NFePHP\NFe\Common\Standardize;
 	require_once('../inc/inc.autoload.php');
 	require_once('../php/geral_config.php');
 	
@@ -12,16 +14,19 @@
 		switch($act){
 
 			case 'box':
-
+				
 				$pathFile           = '../public/config.json';
 				$configJson         = file_get_contents($pathFile);
 				$installConfig      = json_decode($configJson);
-				
+				$arr                = file_get_contents($pathFile);
+
 				$data 		= array();
 				$condicao   = array();
 				$condicao2  = array();
 				$condicao3  = array();
-				
+				$tpEvento   = ''.$_REQUEST['manif'].'';
+				$nSeqEvento = 1;	
+				$xmsg		= "";
 				if(isset($_GET['files']))
 				{	
 					$error = false;
@@ -33,17 +38,48 @@
 						
 						if(move_uploaded_file($file['tmp_name'], $uploaddir .basename($file['name']))){
 							
-							$files[] = $uploaddir .$file['name'];
+							require_once '../sped-nfe/bootstrap.php';
+							$pfxcontent = file_get_contents('../sped-nfe/cert/'.$installConfig->cert.'');
+							$password   = "".$installConfig->senhacert."";
+							
+							$certificate = Certificate::readPfx($pfxcontent, $password);					
+
+							$tools = new Tools($arr, $certificate);
+							//só funciona para o modelo 55
+							$tools->model('55');
+							//este serviço somente opera em ambiente de produção
+							$tools->setEnvironment(1);
+							$arquivo = $uploaddir .$file['name'];
+							
+							if($xml =  simplexml_load_file($arquivo)){
+								
+								$chNFe = trim($xml->protNFe->infProt->chNFe);
+								
+								$responsemanifest = $tools->sefazManifesta($chNFe,$tpEvento,$xJust = '',$nSeqEvento = 1);
+								$st 			  = new Standardize($responsemanifest);
+								$stdRes 		  = $st->toStd();
+								$arra 			  = $st->toArray();
+
+								if($stdRes->cStat == 128){
+									$files[] = $uploaddir .$file['name'];
+								}else{
+									$error = true;
+									$xmsg  = $arra;
+								}
+
+							}
+
 							
 						}else{
 							
 							$error = true;
+							$xmsg  = "Houve um erro ao carregar seus arquivos";
 						}
 						
 											
 						
 					}
-					$data = ($error) ? array('error' => 'Houve um erro ao carregar seus arquivos') : array('files' => $files);
+					$data = ($error) ? array('error' => $xmsg) : array('files' => $files);
 				}else{
 				
 					foreach($_REQUEST['filenames'] as $arquivo){

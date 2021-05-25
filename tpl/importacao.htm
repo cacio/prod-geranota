@@ -86,15 +86,27 @@
                     <form action="#" enctype="multipart/form-data" method="post" id="upload" autocomplete="off">
                         <fieldset>
                             <legend><span class="icon-cogs"></span>&nbsp;Entrada via XML (fornecedor)</legend>
-                                <div class="msg"></div>                               
-                                <div class="span6">
+                                <div class="msg"></div>
+                                <div class="span3"> 
+                                    <div class="input-prepend">
+                                        <label>Tipo Manifestação:</label>
+                                        <select name="manif">
+                                            <option value="" selected>Informe uma operação</option>
+                                            <option value="210200">Confirmação da Operação</option>
+                                            <option value="210210">Ciência da Operação</option>
+                                            <option value="210220">Desconhecimento da Operação</option>
+                                            <option value="210240">Operação não Realizada</option>
+                                        </select>
+                                    </div>
+                                </div>                               
+                                <div class="span4">
                                     <div class="input-prepend">
                                         <label for="file_upload">Arquivo XML:</label>
                                         <span class="add-on icon-terminal"></span>
                                         <input type="file" name="file_upload" class="form-control span12" id="file_upload" multiple>
                                     </div>
                                 </div>
-                                <div class="span5">
+                                <div class="span2">
                                     <label>AÇÃO:</label>
                                     <input class="btn btn-primary" type="submit" name="submit"   value="Enviar">
                                     <a  href="../php/admin.php" class="btn">Voltar</a>
