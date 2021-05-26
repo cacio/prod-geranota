@@ -1,24 +1,33 @@
 <?php return array (
   'root' => 
   array (
-    'pretty_version' => '1.0.0+no-version-set',
-    'version' => '1.0.0.0',
+    'pretty_version' => 'dev-master',
+    'version' => 'dev-master',
     'aliases' => 
     array (
     ),
-    'reference' => NULL,
+    'reference' => '1dc5f359e8cfd7de1c35c5ed44cec35078771e93',
     'name' => '__root__',
   ),
   'versions' => 
   array (
     '__root__' => 
     array (
-      'pretty_version' => '1.0.0+no-version-set',
-      'version' => '1.0.0.0',
+      'pretty_version' => 'dev-master',
+      'version' => 'dev-master',
       'aliases' => 
       array (
       ),
-      'reference' => NULL,
+      'reference' => '1dc5f359e8cfd7de1c35c5ed44cec35078771e93',
+    ),
+    'czproject/git-php' => 
+    array (
+      'pretty_version' => 'v4.0.1',
+      'version' => '4.0.1.0',
+      'aliases' => 
+      array (
+      ),
+      'reference' => 'dc084fc0cc9f01634f71241d19c4fe5ee588ae4e',
     ),
     'matthiasmullie/minify' => 
     array (

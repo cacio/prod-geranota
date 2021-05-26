@@ -12,7 +12,13 @@
 		require_once('../inc/inc.menu.php');
 
 		$tpl->assign('log',$_SESSION['login']);
+		
+		require dirname(__DIR__,1)."/vendor/autoload.php";
+		$git = new CzProject\GitPhp\Git;
+		$repo = $git->open('../.git/refs/tags');
+		$ver = $repo->getTags();
 
+		$tpl->assign('logversion',end($ver));
 		
 		$pathFile      = '../public/config.json';
 		$arr           = file_get_contents($pathFile);
@@ -23,6 +29,7 @@
 			$tpl->newBlock('certificado');
 			
 		}
+		
 
 	/**************************************************************/
 

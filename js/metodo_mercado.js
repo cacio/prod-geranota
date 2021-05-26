@@ -179,6 +179,69 @@ $(document).ready(function(){
 		if(pathArray[i] == 'admin.php' || pathArray[i] == 'importacao.php'){
 			getNfesColetados();
 		}
+
+
+		if(pathArray[i] == 'listanotasimportadas.php'){
+			$.fn.dataTable.ext.search.push(
+				function( settings, data, dataIndex ) {
+					var array  = [];
+					var today  = new Date();
+					var dd     = today.getDate();
+					var mm     = today.getMonth() + 1;
+					var yyyy   = today.getFullYear();
+			
+					if (dd<10)
+						dd = '0'+dd;
+			
+					if (mm<10)
+						mm = '0'+mm;
+					
+					today = dd+'/'+mm+'/'+yyyy;
+			
+					if ($('#min').val() == '' && $('#max').val() == '') {
+						return true;
+					}
+					 if ($('#min').val() != '' || $('#max').val() != '') {
+						
+						var iMin_temp = $('#min').val();
+						
+						if (iMin_temp == '' || iMin_temp == '__/__/____') {
+
+							iMin_temp = '23/01/2009';				
+						}
+			
+						var iMax_temp = $('#max').val();
+						
+						if(iMax_temp == '' || iMax_temp == '__/__/____') {
+							iMax_temp = '01/05/2050';
+							array.push(iMax_temp.substr(0,10));								
+						}
+			
+						var arr_min = iMin_temp.split("/");
+						var arr_max = iMax_temp.split("/");
+						var arr_date = data[1].split("/");
+						
+						var iMin = new Date(arr_min[2], arr_min[1], arr_min[0], 0, 0, 0, 0);
+						var iMax = new Date(arr_max[2], arr_max[1], arr_max[0], 0, 0, 0, 0);
+						var iDate = new Date(arr_date[2], arr_date[1], arr_date[0], 0, 0, 0, 0);
+						
+
+						if (
+							( iMin === null && iMax === null ) ||
+							( iMin === null && iDate <= iMax ) ||
+							( iMin <= iDate   && iMax === null ) ||
+							( iMin <= iDate   && iDate <= iMax )
+						) {
+							return true;
+						}
+
+						
+				
+						return false;
+					}
+				}
+			);
+		}
 	}	
 });
 

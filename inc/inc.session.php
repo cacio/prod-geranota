@@ -7,5 +7,5 @@
 		header('Location:login.php');
 		
 	}
-
+	
 ?>
