@@ -24,7 +24,7 @@
 				$condicao   = array();
 				$condicao2  = array();
 				$condicao3  = array();
-				$tpEvento   = ''.$_REQUEST['manif'].'';
+				$tpEvento   = ''.$_REQUEST['manifxml'].'';
 				$nSeqEvento = 1;	
 				$xmsg		= "";
 				if(isset($_GET['files']))

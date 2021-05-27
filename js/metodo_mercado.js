@@ -400,7 +400,7 @@ $(function()
 	// Pegue os arquivos e colocá-las à nossa variável
 	function prepareUpload(event)
 	{
-		var manif = $('select[name="manif"] option:selected').val();
+		var manif = $('select[name="manifxml"] option:selected').val();
 
 		if(manif == ''){
 			alert('Selecione um tipo de manifestação!');
@@ -418,21 +418,25 @@ $(function()
         event.preventDefault(); // Totalmente parar coisas acontecendo
 
         // / Iniciar um spinner CARREGANDO AQUI
-
+		//console.log(files);
+		if(files == undefined){
+			alert('seleciona um XML!');
+			return false;
+		}
         // Criar um objeto FormData e adicionar os arquivos
 		var data = new FormData();
 		$.each(files, function(key, value)
 		{
 			data.append(key, value);
 		});
-		var manif = $('select[name="manif"] option:selected').val();
+		var manif = $('select[name="manifxml"] option:selected').val();
 
 		if(manif == ''){
 			alert('Selecione um tipo de manifestação!');
 			return false;
 		}
 
-        data.append('manif',manif);
+        data.append('manifxml',manif);
 
         $.ajax({
             url: '../php/relacionamento-exec.php?act=box&files',
@@ -673,7 +677,7 @@ function relacionarproduto(idfor,ifpro,i,idrel,act,npc){
 			html += '<dd id="">'+number_format($("input[name='item["+i+"][vProd]']").val(),2,',','.')+'</dd>';
 		html += '</dl>';
 		
-		html += "<form method='post' id='relacionaproduto' onSubmit='submeterformulario(this); return false;'>";
+		html += "<form method='post' id='relacionaproduto' onSubmit='submeterformulario(this); return false;' autocomplete='off'>";
 
 		html += "<input type='hidden' name='act' value='"+act+"'/>"
 		html += "<input type='hidden' name='idfor' value='"+idfornec+"'/>"
