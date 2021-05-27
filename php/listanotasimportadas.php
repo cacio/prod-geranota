@@ -15,12 +15,12 @@
 		$dir   = "../uploads/";
 		$pasta = opendir($dir);	
 		$scan  = scandir($dir);
-		require dirname(__DIR__,1)."/vendor/autoload.php";
+		/*require dirname(__DIR__,1)."/vendor/autoload.php";
 		$git = new CzProject\GitPhp\Git;
 		$repo = $git->open('../.git/refs/tags');
 		$ver = $repo->getTags();
 
-		$tpl->assign('logversion',end($ver));
+		$tpl->assign('logversion',end($ver));*/
 
 		if(count($scan) > 2) {
 			while ($arquivo = readdir($pasta)){
