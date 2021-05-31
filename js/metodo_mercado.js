@@ -512,7 +512,7 @@ $(function()
 				$("#nota_dtemi").html(data[0].dtemis);
 				//$("#cfop").val(data[0].cfop);
 				$("#cfop").val();
-				$("#cfop").focus();
+				$("#dtentrada").focus();
 				$("#dtentrada").val(data[0].dtentrada);				
 				$("#for_nome").html(data[0].cod+'-'+data[0].nome);
 				$("#for_endereco").html(data[0].ende);
