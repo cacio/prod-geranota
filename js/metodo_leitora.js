@@ -413,8 +413,10 @@ $(document).on('click','.btn-closetime',function(){
 	ajax_load("close");	
 	timer.stop();
 	tempo.innerText = "";
-	count = 0;	
-	count2= 0;
+	count     = 0;	
+	count2    = 0;
+	counthr   = 0;
+	contadors = 0;
 	function ajax_load(action) {
 		ajax_load_div = $(".ajax_load");
 

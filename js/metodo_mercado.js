@@ -2,6 +2,8 @@
 var dlog;
 var boxlanca;
 var table;
+var counthr = 50;
+var contadors = 0;
 $(document).ready(function(){										
 	
     // Crio uma variável chamada $forms que pega o valor da tag form
@@ -1672,17 +1674,100 @@ $(document).on("submit","#formnfesbusca",function(e){
 		type: "post",
 		dataType: "json",
 		beforeSend: function (load) {
+
+			if(contadors == 0){
+				counthr   = 50;	
+				contadors = 0;
+			}
+			
 			ajax_load("open");
+			$('#tempo').css({
+				'font-size':"30px",
+				'line-height':"59px",
+			});	
+			$('.ajax_load_box_title').css({
+				'font-size':"30px"
+			});	
+			
+			$(".ajax_load_box_circle").hide();
+			$(".ajax_load_box_circle2").html('<lottie-player src="https://assets3.lottiefiles.com/packages/lf20_9j44XV.json"  background="transparent"  speed="1"  style="height: 500px;"  loop autoplay></lottie-player>');
+			$('.ajax_load_box_title').html('Aguarde fazendo comunicação com a SEFAZ e buscando dados de NSU!');			
+			$('.btn-closetime').addClass('hide');
+
+			tempo.innerText = "";
 		},
 		success: function (su) {
 			ajax_load("close");
+			$('.ajax_load_box_title').html('Aguarde, carregando...');
+			$(".ajax_load_box_circle2").html('');
+			$(".ajax_load_box_circle").show();
 
 			if (su.msg) {
 
 				if(su.tipo == 1){
 					var view = '<div class="message success">' + su.msg + '</div>';
+					contadors = 0;
+					tempo.innerText  = "";
 				}else{
 					var view = '<div class="message error">' + su.msg + '</div>';
+					var conex   = data.error.search('An error occurred while trying to communication via soap');
+					if(conex > 0){
+						$('#tempo').css({
+							'font-size':"30px",
+							'line-height':"59px",
+						});	
+						
+						$(".ajax_load_box_circle").hide();						
+						$(".ajax_load_box_circle2").html('<lottie-player src="https://assets3.lottiefiles.com/packages/lf20_9j44XV.json"  background="transparent"  speed="1"  style="height: 500px;"  loop autoplay></lottie-player>');
+						
+						if(contadors == 0){
+							ajax_load("open");
+							$('.ajax_load_box_title').css({
+								'font-size':"30px"
+							});							
+							$('.ajax_load_box_title').html('Aguardando retorno da SEFAZ, uma nova tentativa de comunicação será feita em:');
+							$('.btn-closetime').removeClass('hide');
+						}else if(contadors > 0){
+
+							if((contadors+1) == 4){																
+								ajax_load("open");
+								$('.ajax_load_box_title').css({
+									'font-size':"30px",
+									'line-height':"1.2",
+								});
+								$('.btn-closetime').removeClass('hide');
+								$(".ajax_load_box_circle2").html('<lottie-player src="https://assets9.lottiefiles.com/packages/lf20_LlRvIg.json"  background="transparent"  speed="1"  style="height: 500px;"  loop autoplay></lottie-player>');
+								$('.ajax_load_box_title').html('Infelizmente não obtivemos <br> retorno da SEFAZ.<br> Tente novamente mais tarde!');
+								timer.stop();
+								tempo.innerText = "";
+								counthr = 0;
+
+								return false;
+							}
+
+							if((contadors+1) == 3){
+								ajax_load("open");
+								$('.ajax_load_box_title').css({
+									'font-size':"30px"
+								});
+								$('.btn-closetime').removeClass('hide');
+								$('.ajax_load_box_title').html('Aguardando retorno da SEFAZ, uma nova tentativa de comunicação será feita em:');
+								counthr = 90;
+							}else{
+								ajax_load("open");	
+								$('.ajax_load_box_title').css({
+									'font-size':"30px"
+								});							
+								$('.ajax_load_box_title').html('Aguardando retorno da SEFAZ, uma nova tentativa de comunicação será feita em:');
+								$('.btn-closetime').removeClass('hide');
+								counthr = 60;
+							}
+
+						}
+
+					}
+
+					start2();
 				}
 				
 				$(".nsu_form_callback").html(view);
@@ -1710,7 +1795,30 @@ $(document).on("submit","#formnfesbusca",function(e){
 	}
 
 });
+function start2(){
 
+	//var display = document.querySelector('#time'),
+	timer = new CountDownTimer(counthr);
+
+	timer.onTick(format).onTick(restart).start();
+
+	function restart() {
+		if (this.expired())
+		 {
+			
+			contadors++;
+			$("#formnfesbusca").submit();
+			//setTimeout(function() { timer.start(); }, 1000);
+		}
+	}
+
+	function format(minutes, seconds) {
+		minutes = minutes < 10 ? "0" + minutes : minutes;
+		seconds = seconds < 10 ? "0" + seconds : seconds;
+		tempo.textContent = minutes + ':' + seconds;
+	}
+
+}
 
 $(document).on('change','input[name="cknfe"]',function(){
 	if($(this).val() == 2){

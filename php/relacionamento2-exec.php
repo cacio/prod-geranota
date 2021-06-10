@@ -805,7 +805,8 @@
 				
 				$tools->model('55');
 				$tools->setEnvironment(1);
-
+				
+				
 				$vet = $dao->BuscaNsu($_SESSION['idemp']); 
 				$num = count($vet);
 				
@@ -1007,7 +1008,7 @@
 				}
 
 
-				$data = ($erro) ? array('msg' => ''.$msg.'','tipo'=>'2') : array('msg' => 'Analise finalizada com sucesso!','tipo'=>'1');						
+				$data = ($erro) ? array('msg' => ''.$msg.'','tipo'=>'2') : array('msg' => 'Busca por NSU finalizada com sucesso!','tipo'=>'1');						
 								
 				echo json_encode($data);
 
