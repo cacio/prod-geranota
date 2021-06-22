@@ -1215,13 +1215,13 @@ separator
 .fieldset{
   position: relative;
   border: 1px solid #ddd;
-  height: 29px;
+  height: 17px;
   padding: 5px;
   top: -10px;
   float: right;
   margin-top: 1px;
-  line-height: 3;
-  width: 322px;
+  /*line-height: 3;*/
+  width: 296px;
 }
 
 .fieldset h3{
@@ -1266,8 +1266,8 @@ separator
 }
 
 .m-menu-notas2 li a{
-  width: 110px;
-  height: 110px;
+  width: 98px;
+  height: 98px;
   border-radius: 8px;
   background: rgb(199,198,210);
   background: linear-gradient(0deg, rgba(199,198,210,1) 0%, rgba(199,198,210,1) 35%, rgba(222,223,223,1) 100%);
@@ -1278,6 +1278,7 @@ separator
   text-align: center;
   font-weight: bold; 
   padding: 5px;
+  min-inline-size: min-content;
 }
 .m-menu-notas2 li a label{
   width: 110px;
@@ -1336,7 +1337,8 @@ separator
 }
 
 .checkbox-group > * {
-  margin: 0.5rem 0.2rem;
+  margin: 0.5rem 0rem;
+  padding-left: 17px;
 }
 
 .checkbox-group-legend {

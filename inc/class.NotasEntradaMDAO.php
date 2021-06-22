@@ -1392,7 +1392,39 @@ from
 		return $vet;
 
 	}
-	
+	public function VerificaNotasEntrada($nnota){
+
+		
+
+		$dba = $this->dba;
+
+		$vet = array();
+
+
+		$sql = "select distinct m.numero_nota from notas_de_entradas_m m where m.entrada_saida = 'E' and m.numero_nota = '".$nnota."' ";
+		
+		//echo $sql;
+		$res = $dba->query($sql);
+
+		$num = $dba->rows($res); 
+
+		$i = 0;
+			
+		while($lf = ibase_fetch_object($res)){		
+			
+			$numnota           = $lf->NUMERO_NOTA;
+			
+			$nte = new NotasEntradaM();			
+
+			$nte->setNumeroNota($numnota);		
+				
+			$vet[$i++] = $nte;
+
+		}
+
+		return $vet;
+
+	}
 	
 	public function ProximoId(){
 

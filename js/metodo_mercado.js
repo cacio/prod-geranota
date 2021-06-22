@@ -2138,9 +2138,9 @@ function getNfesColetados(){
 
 				var array = JSON.parse(this.responseText);								
 
-				if(array.length == 0){
+				/*if(array.length == 0){
 					VerificaNsuSefaz();
-				}	
+				}	*/
 
 				ListarNfes(JSON.parse(this.responseText));
 			}else{
@@ -2476,35 +2476,12 @@ $(document).ready(function(){
 
 	$(".checkbox-input").change(function(){		
 		if($(this).val() == 1){	
-		table.api()
-       		.columns(1)
-        	.search(this.value)
-        	.draw();
+			filtroNotas(1);
 		}else if($(this).val() == 2){
-			table.api()
-			.columns(1)
-			.search(this.value)
-			.draw();
+			filtroNotas(2);
 		}else if($(this).val() == 3){
 			
-			$.ajax({
-				url: '../php/relacionamento2-exec.php',
-				data: {act:'pesquisanotas',tipo:this.value},
-				type: "post",
-				dataType: "json",
-				beforeSend: function (load) {
-					//ajax_load("open");
-				},
-				success: function (su) {
-					//ajax_load("close");
-					
-					if (su.length > 0) {
-						ListarNfes(su);						
-					}
-		
-					
-				}
-			});
+			filtroNotas(3);
 			return false;
 				
 		}else{
@@ -2516,3 +2493,76 @@ $(document).ready(function(){
 		
 	});
 });
+
+function filtroNotas(tpi){
+	$.ajax({
+		url: '../php/relacionamento2-exec.php',
+		data: {act:'pesquisanotastipo',tipo:tpi},
+		type: "post",
+		dataType: "json",
+		beforeSend: function (load) {
+			//ajax_load("open");
+		},
+		success: function (su) {
+			//ajax_load("close");
+			
+			//if (su.length > 0) {
+				ListarNfes(su);						
+			//}
+
+			
+		}
+	});
+}
+
+$(document).ready(function(){
+	$('.btjalancadas').click(function(){
+		getNfesSincronizadas();
+	});
+});
+
+function getNfesSincronizadas(){
+	ajax_load("open");
+	var xhttp = new XMLHttpRequest();
+	xhttp.onreadystatechange = function(){
+		if(this.readyState === 4){
+			document.getElementById("carregando").innerHTML = "";
+
+			if(this.status === 200){
+
+				var array = JSON.parse(this.responseText);								
+
+				/*if(array.length == 0){
+					VerificaNsuSefaz();
+				}	*/
+
+				ListarNfes(JSON.parse(this.responseText));
+				ajax_load("close");
+			}else{
+				console.log(this.status+' - '+this.statusText);
+				var view = '<div class="message error">' + this.responseText + '</div>';
+				$(".msgnsu").html(view);
+				$(".message").effect("bounce");
+				ajax_load("close");
+			}
+		}
+	};
+
+
+	xhttp.open("GET",'../php/relacionamento2-exec.php?act=verificanfejalancadas',true);
+	xhttp.setRequestHeader("Content-Type","application/json");
+	xhttp.send();
+
+	function ajax_load(action) {
+		ajax_load_div = $(".ajax_load");
+
+		if (action === "open") {
+			ajax_load_div.fadeIn(200).css("display", "flex");
+		}
+
+		if (action === "close") {
+			ajax_load_div.fadeOut(200);
+		}
+	}
+
+}

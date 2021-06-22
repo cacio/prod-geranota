@@ -1223,6 +1223,7 @@
 							
 						}						
 					}
+					
 
 					$cor  = '';
 					$icon = '';
@@ -1319,6 +1320,100 @@
 		
 					$tipo	      = $_REQUEST['tipo'];		
 					$condicao[]   = " n.id_status <> '".$tipo."' ";		
+				}
+
+				$condicao[]   = " n.id_emp = '".$_SESSION['idemp']."' ";
+				
+
+				$where = '';
+				if(count($condicao) > 0){			
+					$where = ' where'.implode('AND',$condicao);					
+				}
+
+				$dao = new NfeNsuDAO();
+				$vet = $dao->PesquisaNotas($where);
+				$num = count($vet);
+				$res = array();
+
+				for($i = 0; $i < $num; $i++){
+
+					$nfensus		 = $vet[$i];
+
+					$cod 				= $nfensus->getCodigo();
+					$nfe_numero  	 	= $nfensus->getNfe_numero();
+					$nfe_serie  	 	= $nfensus->getNfe_serie();
+					$nfe_empresa 	 	= $nfensus->getNfe_empresa();
+					$nfe_cnpj 	 	 	= $nfensus->getNfe_cnpj();
+					$nfe_ie 		 	= $nfensus->getNfe_ie();
+					$nfe_dataemissao 	= $nfensus->getNfe_dataemissao();
+					$id_status 	     	= $nfensus->getId_status();
+					$nome 		     	= $nfensus->getNome_status();
+					$nfe_chave 	     	= $nfensus->getNfe_chave();
+					$nfe_totalnota   	= $nfensus->getNfe_totalnota();
+            		$nfe_situacao    	= $nfensus->getNfe_situacao();
+            		$situacao_manifesto = $nfensus->getSituacao_manifesto();
+
+					if(empty($nfe_totalnota)){
+						$arquivo = "../uploads";
+						if(file_exists($arquivo."/{$nfe_chave}-procNFe.xml")){
+							$xml =  simplexml_load_file($arquivo."/{$nfe_chave}-procNFe.xml");
+							$nfe_totalnota = floatval($xml->NFe->infNFe->total->ICMSTot->vNF);
+							$nfe_situacao  = $xml->protNFe->infProt->xMotivo;							
+							
+						}						
+					}
+
+					$cor  = '';
+					$icon = '';
+					if($id_status == 1){
+						$cor = 'info';
+						$icon = '<i class="fa fa-info-circle fa-2x text-info"></i>';
+					}else if($id_status == 2){
+						$cor = 'success';
+						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}else if($id_status == 3){
+						$cor = 'success';
+						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}
+
+					array_push($res,array(
+						'cod'=>$cod,
+						'nfe_numero'=>$nfe_numero,
+						'nfe_serie'=>$nfe_serie,
+						'nfe_empresa'=>$nfe_empresa,
+						'nfe_cnpj'=>$nfe_cnpj,
+						'nfe_ie'=>$nfe_ie,
+						'nfe_dataemissao'=>date('d/m/Y h:i:s',strtotime($nfe_dataemissao)),
+						'status'=>$cor,
+						'nfe_chave'=>$nfe_chave,
+						'nfe_totalnota'=>number_format($nfe_totalnota,2,',','.'),
+						'nfe_situacao'=>"{$nfe_situacao}",
+						'situacao_manifesto'=>$situacao_manifesto,
+						'icon'=>$icon,
+						'id_status'=>$id_status
+					));
+
+				}
+				echo json_encode($res);
+
+			break;
+			case 'pesquisanotastipo':
+
+				$condicao  = array();	
+
+				
+
+				if(isset($_REQUEST['tipo']) and !empty($_REQUEST['tipo'])){
+		
+					$tipo	      = $_REQUEST['tipo'];		
+					if($tipo == 3){
+						$condicao[]   = " n.id_status <> '".$tipo."' ";		
+					}else if($tipo == 2){
+						$condicao[]   = " (n.id_status = '".$tipo."' or n.id_status = '3') ";		
+					}else{
+						$condicao[]   = " n.id_status = '".$tipo."' ";		
+					}
+					
 				}
 
 				$condicao[]   = " n.id_emp = '".$_SESSION['idemp']."' ";
@@ -1600,6 +1695,90 @@
 				echo "<pre>";
 				print_r($arra);
 				echo "</pre>";
+
+			break;
+			case 'verificanfejalancadas':
+
+				$dao = new NfeNsuDAO();
+				$vet = $dao->ListaNfe($_SESSION['idemp']);
+				$num = count($vet);
+				$res = array();
+
+				for($i = 0; $i < $num; $i++){
+
+					$nfensus		 = $vet[$i];
+
+					$cod 				= $nfensus->getCodigo();
+					$nfe_numero  	 	= $nfensus->getNfe_numero();
+					$nfe_serie  	 	= $nfensus->getNfe_serie();
+					$nfe_empresa 	 	= $nfensus->getNfe_empresa();
+					$nfe_cnpj 	 	 	= $nfensus->getNfe_cnpj();
+					$nfe_ie 		 	= $nfensus->getNfe_ie();
+					$nfe_dataemissao 	= $nfensus->getNfe_dataemissao();
+					$id_status 	     	= $nfensus->getId_status();
+					$nome 		     	= $nfensus->getNome_status();
+					$nfe_chave 	     	= $nfensus->getNfe_chave();
+					$nfe_totalnota   	= $nfensus->getNfe_totalnota();
+            		$nfe_situacao    	= $nfensus->getNfe_situacao();
+            		$situacao_manifesto = $nfensus->getSituacao_manifesto();
+
+					if(empty($nfe_totalnota)){
+						$arquivo = "../uploads";
+						if(file_exists($arquivo."/{$nfe_chave}-procNFe.xml")){
+							$xml =  simplexml_load_file($arquivo."/{$nfe_chave}-procNFe.xml");
+							$nfe_totalnota = floatval($xml->NFe->infNFe->total->ICMSTot->vNF);
+							$nfe_situacao  = $xml->protNFe->infProt->xMotivo;							
+							
+						}						
+					}
+
+					$daom = new NotasEntradaMDAO();
+					$vetm = $daom->VerificaNotasEntrada($nfe_numero);
+					$numm = count($vetm);
+
+					if($numm > 0){
+						$nseu = new NfeNsu();
+						$nseu->setCodigo($cod);
+						$nseu->setId_status(3);
+						$nseu->setId_emp($_SESSION['idemp']);
+
+						$dao->UpdateStatus($nseu);
+						$id_status = 3;	
+					}
+
+
+					$cor  = '';
+					$icon = '';
+					if($id_status == 1){
+						$cor = 'info';
+						$icon = '<i class="fa fa-info-circle fa-2x text-info"></i>';
+					}else if($id_status == 2){
+						$cor = 'success';
+						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}else if($id_status == 3){
+						$cor = 'success';
+						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}
+
+					array_push($res,array(
+						'cod'=>$cod,
+						'nfe_numero'=>$nfe_numero,
+						'nfe_serie'=>$nfe_serie,
+						'nfe_empresa'=>$nfe_empresa,
+						'nfe_cnpj'=>$nfe_cnpj,
+						'nfe_ie'=>$nfe_ie,
+						'nfe_dataemissao'=>date('d/m/Y h:i:s',strtotime($nfe_dataemissao)),
+						'status'=>$cor,
+						'nfe_chave'=>$nfe_chave,
+						'nfe_totalnota'=>number_format($nfe_totalnota,2,',','.'),
+						'nfe_situacao'=>"{$nfe_situacao}",
+						'situacao_manifesto'=>$situacao_manifesto,
+						'icon'=>$icon,
+						'id_status'=>$id_status
+					));
+
+				}
+				echo json_encode($res);
 
 			break;
 
