@@ -112,6 +112,8 @@ $(document).ready(function(e) {
 					}else{	
 						$(".vlguiast").addClass('hide');
 					}
+					
+					$("#cfop").removeClass('inputerr');
 
 					$.confirm({
 						title: '<img src="../images/icon.ico" width="15" /> Sistema',
