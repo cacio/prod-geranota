@@ -745,8 +745,7 @@
 						}
 						//essas tags irão conter os documentos zipados
 						$docs = $lote->getElementsByTagName('docZip');
-						echo "<pre>";
-						print_r($docs);
+						
 						foreach ($docs as $doc) {
 							$numnsu = $doc->getAttribute('NSU');
 							$schema = $doc->getAttribute('schema');
@@ -843,11 +842,13 @@
 						$erro = true;
 						break;
 					}
-				
+					
 					if(empty($resp)){
 						break;
 					}
-				
+					
+					
+					file_put_contents($uploaddir.'teste.xml', $resp);
 					//extrair e salvar os retornos
 					$dom = new \DOMDocument();
 					$dom->loadXML($resp);
@@ -861,7 +862,14 @@
 					$ultNSU   = $node->getElementsByTagName('ultNSU')->item(0)->nodeValue;
 					$maxNSU   = $node->getElementsByTagName('maxNSU')->item(0)->nodeValue;
 					$lote 	  = $node->getElementsByTagName('loteDistDFeInt')->item(0);
+					
+					//file_put_contents($uploaddir."teste{$lote}.xml", $resp);
 
+					if($cStat == 656){
+						$msg  = "{$xMotivo}";
+						$erro = true;
+						break;
+					}
 
 					if(!empty($ultNSU) or !empty($maxNSU)){
 						if($ultNSU != 0 or $maxNSU != 0){
@@ -875,8 +883,6 @@
 								$nsu->setIdEmp($_SESSION['idemp']);
 								
 								$dao->Inserir($nsu);
-
-
 							}
 
 						}
@@ -915,10 +921,10 @@
 								$serie 		  = str_pad($xmlget->NFe->infNFe->ide->serie, 3, "0", STR_PAD_LEFT);
 								$nome_empresa = $xmlget->NFe->infNFe->emit->xNome;
 								$cnpj 		  = !empty($xmlget->NFe->infNFe->emit->CNPJ) ? $xmlget->NFe->infNFe->emit->CNPJ : $xmlget->NFe->infNFe->emit->CPF;
-								$ie			  = $xmlget->NFe->infNFe->emit->IE;
+								$ie			  = !empty($xmlget->NFe->infNFe->emit->IE) ? $xmlget->NFe->infNFe->emit->IE :'';
 								$dhEm		  =  explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[1])[0];
-								$chave		  = $xmlget->protNFe->infProt->chNFe;								
-
+								$chave		  = !empty($xmlget->protNFe->infProt->chNFe) ? $xmlget->protNFe->infProt->chNFe : '';								
+								$vNF		  = !empty($xmlget->NFe->infNFe->total->ICMSTot->vNF) ? $xmlget->NFe->infNFe->total->ICMSTot->vNF : '0.00';	
 								$nfensus->setNfe_numero($nNF);
 								$nfensus->setNfe_serie($serie);
 								$nfensus->setNfe_empresa($nome_empresa);
@@ -928,7 +934,7 @@
 								$nfensus->setId_status(1);								
 								$nfensus->setNfe_chave($chave);
 								$nfensus->setId_emp($_SESSION['idemp']);
-								$nfensus->setNfe_totalnota($xmlget->NFe->infNFe->total->ICMSTot->vNF);
+								$nfensus->setNfe_totalnota($vNF);
 								$nfensus->setNfe_situacao($xmlget->protNFe->infProt->xMotivo);
 								$nfensus->setSituacao_manifesto('Desconhecida');
 
@@ -942,9 +948,10 @@
 								$serie 		  = str_pad($xmlget->NFe->infNFe->ide->serie, 3, "0", STR_PAD_LEFT);
 								$nome_empresa = $xmlget->NFe->infNFe->emit->xNome;
 								$cnpj 		  = !empty($xmlget->NFe->infNFe->emit->CNPJ) ? $xmlget->NFe->infNFe->emit->CNPJ : $xmlget->NFe->infNFe->emit->CPF;
-								$ie			  = $xmlget->NFe->infNFe->emit->IE;
+								$ie			  = !empty($xmlget->NFe->infNFe->emit->IE) ? $xmlget->NFe->infNFe->emit->IE :'';
 								$dhEm		  =   explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[1])[0];
-								$chave		  = $xmlget->protNFe->infProt->chNFe;									
+								$chave		  = !empty($xmlget->protNFe->infProt->chNFe) ? $xmlget->protNFe->infProt->chNFe :'';
+								$vNF		  = !empty($xmlget->NFe->infNFe->total->ICMSTot->vNF) ? $xmlget->NFe->infNFe->total->ICMSTot->vNF : '0.00';	
 
 								$nfensus->setCodigo($id);
 								$nfensus->setNfe_numero($nNF);
@@ -955,7 +962,7 @@
 								$nfensus->setNfe_dataemissao($dhEm);														
 								$nfensus->setNfe_chave($chave);
 								$nfensus->setId_emp($_SESSION['idemp']);
-								$nfensus->setNfe_totalnota($xmlget->NFe->infNFe->total->ICMSTot->vNF);
+								$nfensus->setNfe_totalnota($vNF);
 								$nfensus->setNfe_situacao($xmlget->protNFe->infProt->xMotivo);
 								$nfensus->setSituacao_manifesto('Desconhecida');
 
@@ -967,7 +974,7 @@
 							$file = $uploaddir."{$xmlget->protNFe->infProt->chNFe}-procNFe.xml";
 							file_put_contents($file, $content);
 							
-						}else{
+						}/*else{
 							
 							if(!empty($xmlget->chNFe)){
 								$vetnf = $daonf->VerificaNfeExist($xmlget->chNFe,$_SESSION['idemp']); 
@@ -979,10 +986,11 @@
 									$serie 		  = str_pad(substr($xmlget->chNFe,22,3), 3, "0", STR_PAD_LEFT);
 									$nome_empresa = !empty($xmlget->xNome) ? $xmlget->xNome : "";
 									$cnpj 		  = !empty($xmlget->CNPJ) ? $xmlget->CNPJ : $xmlget->CPF;
-									$ie			  = $xmlget->IE;
+									$ie			  = !empty($xmlget->IE) ? $xmlget->IE : '';
 									$dhEm		  = !empty($xmlget->dhEmi) ?  explode(' ',str_replace('T',' ',$xmlget->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->dhEmi))[1])[0] : explode(' ',str_replace('T',' ',$xmlget->dhEvento))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->dhEvento))[1])[0];
-									$chave		  = $xmlget->chNFe;									
+									$chave		  = !empty($xmlget->chNFe) ? $xmlget->chNFe :'';
 									$xmotivo      = !empty($xmlget->xMotivo) ? $xmlget->xMotivo : (!empty($xmlget->xEvento) ? $xmlget->xEvento : '') ;
+									$vNF          = !empty($xmlget->vNF) ? $xmlget->vNF :'0.00';
 
 									$nfensus->setNfe_numero($nNF);
 									$nfensus->setNfe_serie($serie);
@@ -993,18 +1001,23 @@
 									$nfensus->setId_status(1);								
 									$nfensus->setNfe_chave($chave);
 									$nfensus->setId_emp($_SESSION['idemp']);									
-									$nfensus->setNfe_totalnota($xmlget->vNF);
+									$nfensus->setNfe_totalnota($vNF);
 									$nfensus->setNfe_situacao($xmotivo);
 									$nfensus->setSituacao_manifesto('Desconhecida');
 
 									$daonf->inserir($nfensus);
 								}
 							}	
-						}
+						}*/
 
 					}
+					
+					/*if ($ultNSU == $maxNSU) {
+						$ultNSU = $ultNSU+1;
+						break;
+					}*/
 
-					sleep(2);
+					sleep(3);
 				}
 
 
@@ -1086,9 +1099,10 @@
 								$serie 		  = str_pad($xmlget->NFe->infNFe->ide->serie, 3, "0", STR_PAD_LEFT);
 								$nome_empresa = $xmlget->NFe->infNFe->emit->xNome;
 								$cnpj 		  = !empty($xmlget->NFe->infNFe->emit->CNPJ) ? $xmlget->NFe->infNFe->emit->CNPJ : $xmlget->NFe->infNFe->emit->CPF;
-								$ie			  = $xmlget->NFe->infNFe->emit->IE;
-								$dhEm		  =  explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[1])[0];
-								$chave		  = $xmlget->protNFe->infProt->chNFe;								
+								$ie			  = !empty($xmlget->NFe->infNFe->emit->IE) ? $xmlget->NFe->infNFe->emit->IE : '';
+								$dhEm		  = explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[1])[0];
+								$chave		  = !empty($xmlget->protNFe->infProt->chNFe) ? $xmlget->protNFe->infProt->chNFe : '';								
+								$vNF		  = !empty($xmlget->NFe->infNFe->total->ICMSTot->vNF) ? $xmlget->NFe->infNFe->total->ICMSTot->vNF : '';
 
 								$nfensus->setNfe_numero($nNF);
 								$nfensus->setNfe_serie($serie);
@@ -1099,7 +1113,7 @@
 								$nfensus->setId_status(1);								
 								$nfensus->setNfe_chave($chave);
 								$nfensus->setId_emp($_SESSION['idemp']);
-								$nfensus->setNfe_totalnota($xmlget->NFe->infNFe->total->ICMSTot->vNF);
+								$nfensus->setNfe_totalnota($vNF);
 								$nfensus->setNfe_situacao($xmlget->protNFe->infProt->xMotivo);
 								$nfensus->setSituacao_manifesto('Desconhecida');
 
@@ -1113,9 +1127,10 @@
 								$serie 		  = str_pad($xmlget->NFe->infNFe->ide->serie, 3, "0", STR_PAD_LEFT);
 								$nome_empresa = $xmlget->NFe->infNFe->emit->xNome;
 								$cnpj 		  = !empty($xmlget->NFe->infNFe->emit->CNPJ) ? $xmlget->NFe->infNFe->emit->CNPJ : $xmlget->NFe->infNFe->emit->CPF;
-								$ie			  = $xmlget->NFe->infNFe->emit->IE;
-								$dhEm		  =   explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[1])[0];
-								$chave		  = $xmlget->protNFe->infProt->chNFe;									
+								$ie			  = !empty($xmlget->NFe->infNFe->emit->IE) ? $xmlget->NFe->infNFe->emit->IE: '';
+								$dhEm		  = explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->NFe->infNFe->ide->dhEmi))[1])[0];
+								$chave		  = !empty($xmlget->protNFe->infProt->chNFe) ? $xmlget->protNFe->infProt->chNFe : '';								
+								$vNF		  = !empty($xmlget->NFe->infNFe->total->ICMSTot->vNF) ? $xmlget->NFe->infNFe->total->ICMSTot->vNF : '';									
 
 								$nfensus->setCodigo($id);
 								$nfensus->setNfe_numero($nNF);
@@ -1126,7 +1141,7 @@
 								$nfensus->setNfe_dataemissao($dhEm);														
 								$nfensus->setNfe_chave($chave);
 								$nfensus->setId_emp($_SESSION['idemp']);
-								$nfensus->setNfe_totalnota($xmlget->NFe->infNFe->total->ICMSTot->vNF);
+								$nfensus->setNfe_totalnota($vNF);
 								$nfensus->setNfe_situacao($xmlget->protNFe->infProt->xMotivo);
 								$nfensus->setSituacao_manifesto('Desconhecida');
 
@@ -1150,11 +1165,12 @@
 									$serie 		  = str_pad(substr($xmlget->chNFe,22,3), 3, "0", STR_PAD_LEFT);
 									$nome_empresa = !empty($xmlget->xNome) ? $xmlget->xNome : "";
 									$cnpj 		  = !empty($xmlget->CNPJ) ? $xmlget->CNPJ : $xmlget->CPF;
-									$ie			  = $xmlget->IE;
+									$ie			  = !empty($xmlget->IE) ? $xmlget->IE : '';
 									$dhEm		  = !empty($xmlget->dhEmi) ?  explode(' ',str_replace('T',' ',$xmlget->dhEmi))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->dhEmi))[1])[0] : explode(' ',str_replace('T',' ',$xmlget->dhEvento))[0].' '.explode('-',explode(' ',str_replace('T',' ',$xmlget->dhEvento))[1])[0];
-									$chave		  = $xmlget->chNFe;									
+									$chave		  = !empty($xmlget->chNFe) ? $xmlget->chNFe :'';									
 									$xmotivo      = !empty($xmlget->xMotivo) ? $xmlget->xMotivo : (!empty($xmlget->xEvento) ? $xmlget->xEvento : '') ;
-
+									$vNF		  = !empty($xmlget->vNF) ? $xmlget->vNF: '0.00';	
+									echo $xmlget->dhEmi;
 									$nfensus->setNfe_numero($nNF);
 									$nfensus->setNfe_serie($serie);
 									$nfensus->setNfe_empresa($nome_empresa);
@@ -1164,7 +1180,7 @@
 									$nfensus->setId_status(1);								
 									$nfensus->setNfe_chave($chave);
 									$nfensus->setId_emp($_SESSION['idemp']);									
-									$nfensus->setNfe_totalnota($xmlget->vNF);
+									$nfensus->setNfe_totalnota($vNF);
 									$nfensus->setNfe_situacao($xmotivo);
 									$nfensus->setSituacao_manifesto('Desconhecida');
 
@@ -1213,6 +1229,7 @@
 					$nfe_totalnota   	= $nfensus->getNfe_totalnota();
             		$nfe_situacao    	= $nfensus->getNfe_situacao();
             		$situacao_manifesto = $nfensus->getSituacao_manifesto();
+					$cod_manifesto      = $nfensus->getCod_manifesto();
 
 					if(empty($nfe_totalnota)){
 						$arquivo = "../uploads";
@@ -1224,18 +1241,38 @@
 						}						
 					}
 					
-
-					$cor  = '';
-					$icon = '';
-					if($id_status == 1){
-						$cor = 'info';
-						$icon = '<i class="fa fa-info-circle fa-2x text-info"></i>';
-					}else if($id_status == 2){
+					/*}else if($id_status == 2){
 						$cor = 'success';
 						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
 					}else if($id_status == 3){
 						$cor = 'success';
 						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}*/
+					$cor  = '';
+					$icon = '';
+					
+					$tipo = array(
+						'210200'=>'fa fa-check-double fa-2x text-success',
+						'210210'=>'fa fa-chalkboard-teacher fa-2x text-info',
+						'210220'=>'fa fa-comment-slash fa-2x text-warning',
+						'210240'=>'fa fa-ban fa-2x text-danger',
+					);
+
+					if($id_status == 1){
+						$cor = 'info';
+						$icon = '<i class="fa fa-info-circle fa-2x text-info"></i>';
+					}else{
+						$cor = 'success';	
+						$codsituacao = preg_replace('/[^0-9]/', '', $situacao_manifesto);
+						if(trim($codsituacao) == ''){
+							$codsituacao = $cod_manifesto;
+							if($codsituacao == ''){								
+								$codsituacao = "210200";
+							}
+						}
+
+						$icon = '<i class="'.$tipo[$codsituacao].'"></i>';
+
 					}
 
 					array_push($res,array(
@@ -1352,7 +1389,8 @@
 					$nfe_totalnota   	= $nfensus->getNfe_totalnota();
             		$nfe_situacao    	= $nfensus->getNfe_situacao();
             		$situacao_manifesto = $nfensus->getSituacao_manifesto();
-
+					$cod_manifesto      = $nfensus->getCod_manifesto();
+					
 					if(empty($nfe_totalnota)){
 						$arquivo = "../uploads";
 						if(file_exists($arquivo."/{$nfe_chave}-procNFe.xml")){
@@ -1363,17 +1401,28 @@
 						}						
 					}
 
-					$cor  = '';
-					$icon = '';
+					$tipo = array(
+						'210200'=>'fa fa-check-double fa-2x text-success',
+						'210210'=>'fa fa-chalkboard-teacher fa-2x text-info',
+						'210220'=>'fa fa-comment-slash fa-2x text-warning',
+						'210240'=>'fa fa-ban fa-2x text-danger',
+					);
+
 					if($id_status == 1){
 						$cor = 'info';
 						$icon = '<i class="fa fa-info-circle fa-2x text-info"></i>';
-					}else if($id_status == 2){
-						$cor = 'success';
-						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
-					}else if($id_status == 3){
-						$cor = 'success';
-						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}else{
+						$cor = 'success';	
+						$codsituacao = preg_replace('/[^0-9]/', '', $situacao_manifesto);
+						if(trim($codsituacao) == ''){
+							$codsituacao = $cod_manifesto;
+							if($codsituacao == ''){								
+								$codsituacao = "210200";
+							}
+						}
+
+						$icon = '<i class="'.$tipo[$codsituacao].'"></i>';
+
 					}
 
 					array_push($res,array(
@@ -1446,6 +1495,7 @@
 					$nfe_totalnota   	= $nfensus->getNfe_totalnota();
             		$nfe_situacao    	= $nfensus->getNfe_situacao();
             		$situacao_manifesto = $nfensus->getSituacao_manifesto();
+					$cod_manifesto      = $nfensus->getCod_manifesto();
 
 					if(empty($nfe_totalnota)){
 						$arquivo = "../uploads";
@@ -1457,17 +1507,28 @@
 						}						
 					}
 
-					$cor  = '';
-					$icon = '';
+					$tipo = array(
+						'210200'=>'fa fa-check-double fa-2x text-success',
+						'210210'=>'fa fa-chalkboard-teacher fa-2x text-info',
+						'210220'=>'fa fa-comment-slash fa-2x text-warning',
+						'210240'=>'fa fa-ban fa-2x text-danger',
+					);
+
 					if($id_status == 1){
 						$cor = 'info';
 						$icon = '<i class="fa fa-info-circle fa-2x text-info"></i>';
-					}else if($id_status == 2){
-						$cor = 'success';
-						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
-					}else if($id_status == 3){
-						$cor = 'success';
-						$icon = '<i class="fa fa-check-circle fa-2x text-success"></i>';
+					}else{
+						$cor = 'success';	
+						$codsituacao = preg_replace('/[^0-9]/', '', $situacao_manifesto);
+						if(trim($codsituacao) == ''){
+							$codsituacao = $cod_manifesto;
+							if($codsituacao == ''){								
+								$codsituacao = "210200";
+							}
+						}
+
+						$icon = '<i class="'.$tipo[$codsituacao].'"></i>';
+
 					}
 
 					array_push($res,array(
@@ -1622,7 +1683,7 @@
 						$nseu->setId_status(2);
 						$nseu->setId_emp($_SESSION['idemp']);
 						$nseu->setSituacao_manifesto($codmanifest.' '.$nometipo);
-
+						$nseu->setCod_manifesto($codmanifest);
 						$dao->UpdateStatus($nseu);
 
 						$res[] = array(

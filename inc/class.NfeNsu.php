@@ -15,6 +15,7 @@ class NfeNsu{
     private $nfe_totalnota;
     private $nfe_situacao;
     private $situacao_manifesto;
+    private $codmanifesto;
     public function __construct(){
 
     }
@@ -47,6 +48,9 @@ class NfeNsu{
     public function getNfe_situacao() { return $this->nfe_situacao; }
     public function setSituacao_manifesto($situacao_manifesto) { $this->situacao_manifesto = $situacao_manifesto; }
     public function getSituacao_manifesto() { return $this->situacao_manifesto; }
+
+    public function setCod_manifesto($cod_manifesto) { $this->codmanifesto = $cod_manifesto; }
+    public function getCod_manifesto() { return $this->codmanifesto; }
 
 }
 ?>

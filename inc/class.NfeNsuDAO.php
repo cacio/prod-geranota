@@ -29,7 +29,8 @@ class NfeNsuDAO{
                     n.nfe_chave,
                     n.nfe_totalnota,
                     n.nfe_situacao,
-                    n.situacao_manifesto
+                    n.situacao_manifesto,
+                    n.cod_manifesto
                 FROM notas_nfe_nsu n
                 inner join status s on (s.id = n.id_status) where  n.id_emp = '.$idemp.' and s.id <> "3" order by n.nfe_dataemissao desc';
 
@@ -51,6 +52,7 @@ class NfeNsuDAO{
             $nfe_totalnota      = $dba->result($res,$i,'nfe_totalnota');
             $nfe_situacao       = $dba->result($res,$i,'nfe_situacao');
             $situacao_manifesto = $dba->result($res,$i,'situacao_manifesto');
+            $cod_manifesto      = $dba->result($res,$i,'cod_manifesto');
 
             $nfensus = new NfeNsu();
 
@@ -67,6 +69,7 @@ class NfeNsuDAO{
             $nfensus->setNfe_totalnota($nfe_totalnota);
             $nfensus->setNfe_situacao($nfe_situacao);
             $nfensus->setSituacao_manifesto($situacao_manifesto);
+            $nfensus->setCod_manifesto($cod_manifesto);
 
             $vet[$i] = $nfensus;
 
@@ -244,7 +247,8 @@ class NfeNsuDAO{
                     n.nfe_chave,
                     n.nfe_totalnota,
                     n.nfe_situacao,
-                    n.situacao_manifesto
+                    n.situacao_manifesto,
+                    n.cod_manifesto
                 FROM notas_nfe_nsu n
                 inner join status s on (s.id = n.id_status) '.$where.' order by n.nfe_dataemissao desc';
         //echo "{$sql}";
@@ -266,6 +270,7 @@ class NfeNsuDAO{
             $nfe_totalnota      = $dba->result($res,$i,'nfe_totalnota');
             $nfe_situacao       = $dba->result($res,$i,'nfe_situacao');
             $situacao_manifesto = $dba->result($res,$i,'situacao_manifesto');
+            $cod_manifesto      = $dba->result($res,$i,'cod_manifesto');
 
             $nfensus = new NfeNsu();
 
@@ -282,6 +287,7 @@ class NfeNsuDAO{
             $nfensus->setNfe_totalnota($nfe_totalnota);
             $nfensus->setNfe_situacao($nfe_situacao);
             $nfensus->setSituacao_manifesto($situacao_manifesto);
+            $nfensus->setCod_manifesto($cod_manifesto);
 
             $vet[$i] = $nfensus;
 
@@ -333,7 +339,7 @@ class NfeNsuDAO{
                 ".$nfe_total.",
                 '".$nfe_situacao."',
                 '".$manifest_situa."')";
-
+        //echo $sql;
         $res = $dba->query($sql);
     }
 
@@ -361,8 +367,7 @@ class NfeNsuDAO{
                 `nfe_ie` = '".$nfe_ie."',
                 `nfe_dataemissao` = '".$nfe_dataemissao."',               
                 `nfe_totalnota` = ".$nfe_total.",
-                `nfe_situacao` = '".$nfe_situacao."',
-                `situacao_manifesto` = '".$manifest_situa."'
+                `nfe_situacao` = '".$nfe_situacao."'                
                 WHERE `id` = ".$codigo." and id_emp = ".$idemp." ";
 
         $res = $dba->query($sql);
@@ -376,11 +381,13 @@ class NfeNsuDAO{
         $id_status       = $nfensus->getId_status();  
         $idemp           = $nfensus->getId_emp();
         $manifest_situa  = $nfensus->getSituacao_manifesto();
+        $codmanifest     = $nfensus->getCod_manifesto();
 
         $sql = "UPDATE `notas_nfe_nsu`
                 SET      
                 `id_status` = '".$id_status."' ,
-                `situacao_manifesto`= '".$manifest_situa."'              
+                `situacao_manifesto`= '".$manifest_situa."',
+                `cod_manifesto`  = '".$codmanifest."'             
                 WHERE `id` = ".$codigo." and id_emp = ".$idemp." ";
         //echo $sql;  
         $res = $dba->query($sql);

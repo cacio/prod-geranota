@@ -1710,7 +1710,7 @@ $(document).on("submit","#formnfesbusca",function(e){
 					tempo.innerText  = "";
 				}else{
 					var view = '<div class="message error">' + su.msg + '</div>';
-					var conex   = data.error.search('An error occurred while trying to communication via soap');
+					var conex   = su.msg.search('An error occurred while trying to communication via soap');
 					if(conex > 0){
 						$('#tempo').css({
 							'font-size':"30px",
@@ -1779,6 +1779,15 @@ $(document).on("submit","#formnfesbusca",function(e){
 			}
 
 			
+		},
+		error: function(jqXHR, textStatus, errorThrown){
+			var view = '<div class="message error">' + jqXHR.responseText + '</div>';
+			$(".nsu_form_callback").html(view);
+			$(".message").effect("bounce");
+
+			ajax_load("close");
+			$('.ajax_load_box_title').html('Aguarde, carregando...');
+			$(".ajax_load_box_circle2").html('');			
 		}
 	});
 	return false;
